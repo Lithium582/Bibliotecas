@@ -1,6 +1,5 @@
 package TrieConPaginas;
 
-import TSimpleTrie.*;
 import java.util.LinkedList;
 
 /*
@@ -33,15 +32,18 @@ public class TNodoTriePag implements INodoTriePag {
     @Override
     public void insertar(String unaPalabra, int pPagina) {
         TNodoTriePag nodo = this;
+        
         for (int c = 0; c < unaPalabra.length(); c++) {
             int indice = unaPalabra.charAt(c) - 'a';
-            if(indice < CANT_CHR_ABECEDARIO && indice>=0){
+            
+            if(indice < CANT_CHR_ABECEDARIO && indice >= 0){
                 if (nodo.hijos[indice] == null) {
                     nodo.hijos[indice] = new TNodoTriePag();
                 }
                 nodo = nodo.hijos[indice];
             }
         }
+        
         nodo.esPalabra = true;
         nodo.agregarPagina(pPagina);
     }
@@ -118,7 +120,15 @@ public class TNodoTriePag implements INodoTriePag {
             }
             nodo = nodo.hijos[indice];
         }
-        return nodo;
+        
+        //Add Ángel
+        if(nodo.esPalabra){
+            return nodo;
+        }
+        return null;
+        //Fin Add Ángel
+        
+        //return nodo;
     }
     
     public LinkedList<Integer> buscarPaginas(String s) {
@@ -130,7 +140,7 @@ public class TNodoTriePag implements INodoTriePag {
             }
             nodo = nodo.hijos[indice];
         }
-        if (nodo != null){
+        if (nodo != null && nodo.esPalabra){
             return nodo.getPaginas();
         } else{
             return null;

@@ -1,7 +1,5 @@
 package TrieConPaginas;
 
-
-import TSimpleTrie.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;

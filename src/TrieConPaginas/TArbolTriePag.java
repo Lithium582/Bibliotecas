@@ -1,6 +1,6 @@
 package TrieConPaginas;
 
-import TSimpleTrie.*;
+
 import java.util.LinkedList;
 
 /*
@@ -20,11 +20,15 @@ public class TArbolTriePag implements IArbolTriePag {
 
     @Override
     public void insertar(String palabra, int pPagina) {
-        if (raiz == null) {
-            raiz = new TNodoTriePag();
-        }
-        if(palabra != ""){
-            raiz.insertar(palabra,pPagina);
+        try{
+            if (raiz == null) {
+                raiz = new TNodoTriePag();
+            }
+            if(palabra != ""){
+                raiz.insertar(palabra,pPagina);
+            }
+        }catch(Exception err){
+            int i = 42;
         }
     }
 
@@ -61,6 +65,17 @@ public class TArbolTriePag implements IArbolTriePag {
             raiz.predecir(prefijo, palabras);
         }
         return palabras;
+    }
+    
+    public TNodoTriePag buscarNodo(String pCadena){
+        if(raiz == null){
+            return null;
+        }
+        else{
+            int[] cont = new int[1];
+            cont[0] = 0;
+            return raiz.buscarNodo(pCadena);   
+        }
     }
     
     public static String filtrarPalabra(String unaPalabra) {

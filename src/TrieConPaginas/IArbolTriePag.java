@@ -1,7 +1,5 @@
 package TrieConPaginas;
 
-
-import TSimpleTrie.*;
 import java.util.LinkedList;
 
 /*

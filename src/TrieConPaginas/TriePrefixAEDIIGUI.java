@@ -9,34 +9,37 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Josse
  */
 public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
-    
+
     private TArbolTriePag trie;
-    
+
     /**
      * Creates new form TriePrefixAEDIIGUI
      */
     public TriePrefixAEDIIGUI() {
-        this.trie = new TArbolTriePag();
-        
-        String[] palabrasclave = ManejadorArchivosGenerico.leerArchivo("src/libro.txt");
-        int cantPalabras = 0;
-        
-        //Contamos una nueva página cada veinte líneas
-        for (int i = 0; i < palabrasclave.length; i++) {
-            String[] palabrasLinea = palabrasclave[i].split(" ");
-            for (String p : palabrasLinea){
-                trie.insertar(p.toLowerCase(), (i/20));
+        try {
+            this.trie = new TArbolTriePag();
+
+            String[] palabrasclave = ManejadorArchivosGenerico.leerArchivo("src/libro.txt");
+            int cantPalabras = 0;
+
+            //Contamos una nueva página cada veinte líneas
+            for (int i = 0; i < palabrasclave.length; i++) {
+                String[] palabrasLinea = palabrasclave[i].split(" ");
+                for (String p : palabrasLinea) {
+                    trie.insertar(p.toLowerCase(), (i / 20));
+                }
+
             }
-            
+
+            initComponents();
+        } catch (Exception ex) {
+            int i = 42;
         }
-        
-        initComponents();
     }
 
     /**
@@ -53,6 +56,7 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListPalabras = new javax.swing.JList();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +77,13 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jListPalabras);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,6 +99,10 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jtfSearch, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(163, 163, 163))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +115,9 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,9 +127,9 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
         DefaultListModel listModel = new DefaultListModel();
         jListPalabras.clearSelection();
         LinkedList<String> palabras;
-        
+
         palabras = this.trie.predecir(jtfSearch.getText());
-        for(String palabra : palabras){
+        for (String palabra : palabras) {
             listModel.addElement(palabra);
         }
         jListPalabras.setModel(listModel);
@@ -121,6 +138,19 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
     private void jtfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfSearchActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TNodoTriePag a = trie.buscarNodo("zz");
+        TNodoTriePag b = trie.buscarNodo("ar");
+        TNodoTriePag c = trie.buscarNodo("arthur");
+        
+        int d = trie.buscar("zz");
+        int e = trie.buscar("ar");
+        int f = trie.buscar("arthur");
+        
+        String g = "Holu";
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +189,7 @@ public class TriePrefixAEDIIGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList jListPalabras;
