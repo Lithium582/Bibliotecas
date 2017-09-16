@@ -108,7 +108,7 @@ public class TNodoTriePag implements INodoTriePag {
             }
         }
         
-        return contador[0];
+        return -1;
     }
     
     public TNodoTriePag buscarNodo(String s) {
@@ -121,14 +121,7 @@ public class TNodoTriePag implements INodoTriePag {
             nodo = nodo.hijos[indice];
         }
         
-        //Add Ángel
-        if(nodo.esPalabra){
-            return nodo;
-        }
-        return null;
-        //Fin Add Ángel
-        
-        //return nodo;
+        return nodo;
     }
     
     public LinkedList<Integer> buscarPaginas(String s) {
@@ -152,7 +145,6 @@ public class TNodoTriePag implements INodoTriePag {
             if (nodo.esPalabra) {
                 if(!s.trim().equals("")){
                     palabras.add(s + nodo.getPaginas().toString());
-                    //palabras.add(s);
                 }
             }
             

@@ -18,8 +18,10 @@ public class TNodoTrie implements INodoTrie {
     @Override
     public void insertar(String unaPalabra) {
         TNodoTrie nodo = this;
+        
         for (int c = 0; c < unaPalabra.length(); c++) {
             int indice = unaPalabra.charAt(c) - 'a';
+            
             if(indice < CANT_CHR_ABECEDARIO && indice>=0){
                 if (nodo.hijos[indice] == null) {
                     nodo.hijos[indice] = new TNodoTrie();
@@ -27,6 +29,7 @@ public class TNodoTrie implements INodoTrie {
                 nodo = nodo.hijos[indice];
             }
         }
+        
         nodo.esPalabra = true;
     }
 
@@ -34,8 +37,8 @@ public class TNodoTrie implements INodoTrie {
         if (nodo != null) {
             if (nodo.esPalabra) {
                 System.out.println(s);
-                
             }
+            
             for (int c = 0; c < CANT_CHR_ABECEDARIO; c++) {
                 if (nodo.hijos[c] != null) {
                     imprimir(s+(char)(c + 'a'), nodo.hijos[c]);
@@ -43,6 +46,7 @@ public class TNodoTrie implements INodoTrie {
             }
         }
     }
+    
     public String imprimirDos(String s, TNodoTrie nodo) {
         String s2 ="";
         if (nodo != null) {
@@ -67,6 +71,7 @@ public class TNodoTrie implements INodoTrie {
         TNodoTrie nodo = this;
         for(int c=0; c<palabra.length();c++){
             int indice = palabra.charAt(c) - 'a';
+            
             if(nodo.hijos[indice]!=null){
                 contador[0]++;
                 //``¡TNodoTrie hijo = nodo.hijos['c'];
@@ -76,8 +81,8 @@ public class TNodoTrie implements INodoTrie {
                     nodo = nodo.hijos[indice];
                 }
             }
-            
         }
+        
         return contador[0];
     }
     
@@ -90,14 +95,18 @@ public class TNodoTrie implements INodoTrie {
             }
             nodo = nodo.hijos[indice];
         }
+        
         return nodo;
     }
     
     private void predecir(String s, String prefijo, LinkedList<String> palabras, TNodoTrie nodo) {
         if (nodo != null) {
             if (nodo.esPalabra) {
-                palabras.add(s);
+                if(!s.trim().equals("")){
+                    palabras.add(s);
+                }
             }
+            
             for (int c = 0; c < CANT_CHR_ABECEDARIO; c++) {
                 if (nodo.hijos[c] != null) {
                     predecir(s+(char)(c + 'a'),prefijo,palabras, nodo.hijos[c]);
