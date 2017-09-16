@@ -23,7 +23,7 @@ public class Main {
         int index = 0;
 
         for (Double factor : factores) {
-            String[] claves = ManejadorArchivosGenerico.leerArchivo("./src/UT3/TA4/claves_insertar.txt");
+            String[] claves = ManejadorArchivosGenerico.leerArchivo("./src/claves_insertar.txt");
             THash hash = new THash(claves.length, factor);
             double busquedasConExito = 0;
             double busquedasSinExito = 0;
@@ -39,7 +39,7 @@ public class Main {
                 }
             }
 
-            String[] buscar = ManejadorArchivosGenerico.leerArchivo("./src/UT3/TA4/claves_buscar.txt");
+            String[] buscar = ManejadorArchivosGenerico.leerArchivo("./src/claves_buscar.txt");
             for (String clave : buscar) {
                 double busqueda = hash.buscar(Integer.parseInt(clave));
                 if (busqueda > 0) {
@@ -49,16 +49,16 @@ public class Main {
                 }
             }
 
-            System.out.println("El promedio de búsquedas con exito es:" + busquedasConExito);
-            System.out.println("El promedio de búsquedas sin exito es:" + busquedasSinExito);
-            System.out.println("El promedio de inserciones con exito es:" + insercionesConExito);
-            System.out.println("El promedio de inserciones sin exito es:" + insercionesSinExito);
+            System.out.println("La cantidad de búsquedas con exito es:" + busquedasConExito);
+            System.out.println("La cantidad de búsquedas sin exito es:" + busquedasSinExito);
+            System.out.println("La cantidad de inserciones con exito es:" + insercionesConExito);
+            System.out.println("La cantidad de inserciones sin exito es:" + insercionesSinExito);
 
             out[index] = (insercionesConExito / hash.getSizeLista()) + ";"
                     + (busquedasConExito / hash.getSizeLista()) + ";"
                     + (busquedasSinExito / hash.getSizeLista());
             index++;
         }
-        ManejadorArchivosGenerico.escribirArchivo("./src/UT3/TA4/out.csv", out);
+        ManejadorArchivosGenerico.escribirArchivo("./src/out.csv", out);
     }
 }
