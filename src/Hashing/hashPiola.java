@@ -50,6 +50,10 @@ public class hashPiola {
                 size++;
                 lista[(j + i) % tamanoTabla] = clave;
                 return contador;
+            } else{
+                if(lista[(j + i) % tamanoTabla] == clave){
+                    return contador;
+                }
             }
 
             contador++;

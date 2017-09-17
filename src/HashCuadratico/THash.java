@@ -45,17 +45,18 @@ public class THash {
         int a = 0;
         int pos = funcionHashing(unaClave);
         while (lista[pos] != 0 && a < lista.length) {
+            if (lista[pos] == unaClave) {
+                return contador;
+            }
+            
             i++;
             a = i * i;
             pos = (pos + a) % lista.length;
+            
             contador++;
         }
-
-        if (a > lista.length) {
-            return (-contador);
-        } else {
-            return contador;
-        }
+        
+        return (-contador);
     }
 
     public int insertar(int unaClave) {
@@ -67,6 +68,11 @@ public class THash {
             i++;
             a = i * i;
             pos = (pos + a) % lista.length;
+            
+            if (lista[pos] == unaClave) {
+                return contador;
+            }
+            
             contador++;
         }
 
