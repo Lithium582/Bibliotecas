@@ -13,29 +13,34 @@ public class THash {
     
     private final int[] lista;
     public int size;
+    public int tamanoTabla;
     
     public THash(int tamaño, Double factor){
         Double t = tamaño / factor;
-        while(!esPrimo(t.intValue())) t++;
         this.size = 0;
-        this.lista = new int[t.intValue()];
+        this.tamanoTabla = proximoPrimo(t.intValue());
+        this.lista = new int[this.tamanoTabla];
     }
     
     public int getSizeLista(){
         return this.lista.length;
     }
     
-    private boolean esPrimo(int n) {
-        for (int i = 2; i <= n / 2; i++) {
-            if (n % i == 0) {
-                return false;
+    private int proximoPrimo(int aPartirDe){
+        aPartirDe++;
+        int numeroPrimoQuest = 0;
+        for(int i = 2; i < aPartirDe; i++){
+            if(aPartirDe%i == 0){
+                aPartirDe++;
+                i = 2;
             }
         }
-        return true;
+        
+        return aPartirDe;
     }
     
     public int buscar(int unaClave){
-        int contador = 0;
+        int contador = 1;
         int i = 0;
         int a = 0;
         int pos = funcionHashing(unaClave);
@@ -45,6 +50,7 @@ public class THash {
             pos = (pos + a) % lista.length;
             contador++;
         }
+        
         if (a > lista.length){
             return (-contador);
         }
@@ -64,9 +70,11 @@ public class THash {
             pos = (pos + a) % lista.length;
             contador++;
         }
+        
         if (a > lista.length){
             return (-contador);
         }
+        
         else{
             this.lista[pos] = unaClave;
             size++;
@@ -79,6 +87,7 @@ public class THash {
         for (int i = 2; i < unaClave; i++){
             total = (total + unaClave % i) % i;
         }
+        
         return total % lista.length;
     }
 }

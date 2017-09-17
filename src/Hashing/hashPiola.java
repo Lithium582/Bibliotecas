@@ -11,45 +11,64 @@ package Hashing;
  * @author Bettina
  */
 public class hashPiola {
-    String[] T;
-    int m;
     
-    public String buscarHash(int clave){
-        String[] v = ManejadorArchivosGenerico.leerArchivo("src/claves_buscar.txt");
+    private final int[] lista;
+    public int size;
+    public int tamanoTabla;
+    
+    public hashPiola(int tamano, Double factor){
+        Double t = tamano / factor;
+        this.size = 0;
+        this.tamanoTabla = t.intValue();
+        this.lista = new int[this.tamanoTabla];
+    }
+    
+    public int buscarHash(int clave){
         int i = 0;
-        boolean encontrado = false;
-        int comparaciones = 0;
-        int n = 10;
-        while (i < n && encontrado == false){
-            if (v[i].equals(clave)){
-                encontrado = true;
-                return v[i];
+        int contador = 1;
+        int j = this.funcionHash((clave));
+        
+        while(this.lista[(j + i) % tamanoTabla] != 0 && i < this.tamanoTabla){
+            if (lista[(j + i) % tamanoTabla] == clave){
+                return contador;
             }
-            else{
-                i += 1;
-            }
-           comparaciones += 1;
+            i++;
+            
+            contador++;
         }
-        return "";
+        
+        return -(contador);
     }
     
     public int insertarHash(int clave){
         int i = 0;
-        int contador = 0;
-        int j = this.funcionHash(clave);
-        while (T[j].isEmpty()|| i==m){
-            if (T[j].isEmpty()){
+        int contador = 1;
+        int j = this.funcionHash((clave));
+        
+        for (i = 0; i < tamanoTabla; i++){
+            if (lista[(j + i) % tamanoTabla] == 0){
+                size++;
+                lista[(j + i) % tamanoTabla] = clave;
                 return contador;
             }
-            else{
-                i++;
-            }
+            
             contador++;
         }
-        return 0;
+        
+        if(i == this.tamanoTabla){
+            return -(contador);
+        }else{
+            return contador;
+        }
+        
     }
     
     public int funcionHash(int clave){
-        return 1;
+        int total = 0;
+        for (int i = 2; i < clave; i++){
+            total = (total + clave % i) % i;
+        }
+        
+        return total % lista.length;
     }
 }
