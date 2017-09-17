@@ -11,64 +11,64 @@ package Hashing;
  * @author Bettina
  */
 public class hashPiola {
-    
+
     private final int[] lista;
     public int size;
     public int tamanoTabla;
-    
-    public hashPiola(int tamano, Double factor){
+
+    public hashPiola(int tamano, Double factor) {
         Double t = tamano / factor;
         this.size = 0;
         this.tamanoTabla = t.intValue();
         this.lista = new int[this.tamanoTabla];
     }
-    
-    public int buscarHash(int clave){
+
+    public int buscarHash(int clave) {
         int i = 0;
         int contador = 1;
         int j = this.funcionHash((clave));
-        
-        while(this.lista[(j + i) % tamanoTabla] != 0 && i < this.tamanoTabla){
-            if (lista[(j + i) % tamanoTabla] == clave){
+
+        while (this.lista[(j + i) % tamanoTabla] != 0 && i < this.tamanoTabla) {
+            if (lista[(j + i) % tamanoTabla] == clave) {
                 return contador;
             }
             i++;
-            
+
             contador++;
         }
-        
+
         return -(contador);
     }
-    
-    public int insertarHash(int clave){
+
+    public int insertarHash(int clave) {
         int i = 0;
         int contador = 1;
         int j = this.funcionHash((clave));
-        
-        for (i = 0; i < tamanoTabla; i++){
-            if (lista[(j + i) % tamanoTabla] == 0){
+
+        for (i = 0; i < tamanoTabla; i++) {
+            if (lista[(j + i) % tamanoTabla] == 0) {
                 size++;
                 lista[(j + i) % tamanoTabla] = clave;
                 return contador;
             }
-            
+
             contador++;
         }
-        
-        if(i == this.tamanoTabla){
+
+        if (i == this.tamanoTabla) {
             return -(contador);
-        }else{
+        } else {
             return contador;
         }
-        
+
     }
-    
-    public int funcionHash(int clave){
+
+    public int funcionHash(int clave) {
         int total = 0;
-        for (int i = 2; i < clave; i++){
+        for (int i = 2; i < clave; i++) {
             total = (total + clave % i) % i;
         }
-        
+
         return total % lista.length;
     }
 }
