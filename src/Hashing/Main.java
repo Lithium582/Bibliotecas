@@ -6,8 +6,6 @@
 package Hashing;
 
 import TSimpleTrie.ManejadorArchivosGenerico;
-import TSimpleTrie.RandomMethods;
-import TSimpleTrie.TArbolTrie;
 
 /**
  *
