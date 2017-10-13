@@ -143,6 +143,22 @@ public class TVertice implements IVertice{
         return losCaminos;
         
     }
-
-
+    
+    public boolean tieneCiclo(TCamino camino) {
+        this.visitado = true;
+        boolean flag = false;
+        camino.getOtrosVertices().add(this.etiqueta);
+        for (TAdyacencia a : this.adyacentes){
+            if (!a.getDestino().visitado){
+                flag = a.getDestino().tieneCiclo(camino);
+            }
+            else{
+                if (camino.getOtrosVertices().contains(a.getDestino().etiqueta)){
+                    return true;
+                }
+            }
+        }
+        camino.getOtrosVertices().remove(this.etiqueta);
+        return flag;
+    }
 }

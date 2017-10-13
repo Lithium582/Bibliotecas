@@ -57,7 +57,7 @@ public class TArbolTriePag implements IArbolTriePag {
             return raiz.buscar(palabra,cont);   
         }
     }
-
+    
     @Override
     public LinkedList<String> predecir(String prefijo) {
         LinkedList<String> palabras = new LinkedList<String>();

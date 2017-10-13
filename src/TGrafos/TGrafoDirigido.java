@@ -182,9 +182,6 @@ public class TGrafoDirigido implements IGrafoDirigido {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-  
-   
-
     @Override
     public boolean contieneCiclos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -193,11 +190,6 @@ public class TGrafoDirigido implements IGrafoDirigido {
     
     @Override
     public boolean insertarArista(Comparable etiquetaOrigen, Comparable etiquetaDestino, Comparable costo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean tieneCiclo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -253,5 +245,25 @@ public class TGrafoDirigido implements IGrafoDirigido {
         }
         
         return caminos;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean tieneCiclo() {
+        boolean flag = false;
+        for (Comparable key : this.vertices.keySet()){
+            TVertice vertice = this.vertices.get(key);
+            if (!vertice.getVisitado()){
+                TCamino camino = new TCamino(vertice);
+                flag = vertice.tieneCiclo(camino);
+                if (flag){
+                    return flag;
+                }
+            }
+        }
+        return false;
     }
 }
