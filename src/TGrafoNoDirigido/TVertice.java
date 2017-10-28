@@ -88,6 +88,32 @@ public class TVertice {
         }
         return null;
     }
+    
+    /**
+     * No sé si sirve
+     * @param etVertDest
+     * @param caminoPrevio
+     * @return 
+     */
+    public boolean existeUnCamino(Comparable etVertDest, TCamino caminoPrevio) {
+        this.setVisitado(true);
+        boolean retorno = false;
+        for (TAdyacencia adyacencia : this.getAdyacentes()) {
+            TVertice destino = adyacencia.getDestino();
+            if (!destino.getVisitado()) {
+                if (destino.getEtiqueta().compareTo(etVertDest) == 0) {
+                    retorno = true;
+                } else {
+                    caminoPrevio.agregarAdyacencia(adyacencia);
+                    retorno = destino.existeUnCamino(etVertDest, caminoPrevio);
+                    caminoPrevio.eliminarAdyacencia(adyacencia);
+                }
+            }
+        }
+        this.setVisitado(false);
+        
+        return retorno;
+    }
 
     public TCaminos todosLosCaminos(Comparable etVertDest, TCamino caminoPrevio, TCaminos todosLosCaminos) {
         this.setVisitado(true);

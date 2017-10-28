@@ -135,5 +135,13 @@ public class TAristas {
     public void setAristas(Collection<TArista> aristas) {
         this.aristas = aristas;
     }
+    
+    public TAristas copiar(){
+        TAristas aristasCopiadas = new TAristas();
+        aristasCopiadas.aristas.addAll(this.aristas);
+        
+        return aristasCopiadas;
+        
+    }
 
 }

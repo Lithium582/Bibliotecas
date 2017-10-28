@@ -236,6 +236,82 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         }
     }
     
+    /**
+     * El método del Kruskál!
+     * 
+     * @return 
+     */
+    public TGrafoNoDirigido ElKruskal(){
+        int costoKruskal = 0;
+        //Copio el objeto Aristas para poder manipularlo sin romper el grafo
+        TAristas arist = aristas.copiar();
+        
+        LinkedList<TArista> Aristas = new LinkedList();
+        Collection<TVertice> V = this.getVertices().values();
+        TGrafoNoDirigido nuevoGrafo = new TGrafoNoDirigido(V,Aristas);
+        
+        //Como insertamos solo una arista para conectar dos vértices
+        //entonces podemos cortar el bucle cuando la cantidad de aristas insertadas
+        //sea igual al número de vértices del grafo
+        while(arist.getAristas().size() > 0){
+            TArista a = arist.Buscarmenor();
+            
+            //Remuevo la arista encontrada
+            arist.getAristas().remove(a);
+            
+            ///dados 2 vertices necesito saber si ya tengo un camino entre esos 2
+            ///si no estan conectados agrego la arista
+            ///si estan conectados la quito no la agrego
+            
+            if(a != null){
+                if(!nuevoGrafo.existeUnCaminoViejo(a.getEtiquetaOrigen(),a.getEtiquetaDestino())){
+                    costoKruskal += a.getCosto();
+                    System.out.println("Costo: " + a.getCosto() + " Origen: " + a.getEtiquetaOrigen() + " Destino: " + a.getEtiquetaDestino());
+                    nuevoGrafo.insertarArista(a);
+                    Aristas.add(a);
+                }
+            }
+            
+        }
+        
+        System.out.println("Costo Kruskal: " + costoKruskal);
+        return nuevoGrafo;
+        
+    }
+    
+    public boolean existeUnCamino(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
+        for(TArista arista : this.aristas.getAristas()){
+            if(arista.getEtiquetaOrigen().equals(etiquetaOrigen)){
+                if(arista.getEtiquetaDestino().equals(etiquetaDestino)){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+            
+            if(arista.getEtiquetaOrigen().equals(etiquetaDestino)){
+                if(arista.getEtiquetaDestino().equals(etiquetaOrigen)){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean existeUnCaminoViejo(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
+        TVertice verticeOrigen = this.buscarVertice(etiquetaOrigen);
+        boolean existe = false;
+        TCamino caminoPrevio = new TCamino(verticeOrigen);
+        if (verticeOrigen != null) {
+            existe = verticeOrigen.existeUnCamino(etiquetaDestino, caminoPrevio);
+        }
+
+        return existe;
+    }
+    
     public TGrafoNoDirigido Kruskal(){
         
         TAristas arist = aristas;
