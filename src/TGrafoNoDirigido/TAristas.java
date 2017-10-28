@@ -37,16 +37,19 @@ public class TAristas {
      * @return 
      */
     public TArista buscarMin(Collection<TVertice> VerticesU, Collection<TVertice> VerticesV) {
-        TArista min = new TArista("","",Double.MAX_VALUE);
-        for(TVertice u : VerticesU)
-        {
-            for(TVertice v: VerticesV)
-            {
-                TArista a = buscar(u.getEtiqueta(), v.getEtiqueta());
-                if( a != null)
-                {
-                    if(min.getCosto() > a.getCosto() )
-                    {
+        //TArista min = new TArista("","",Double.MAX_VALUE);
+        TArista min = null;
+        
+        for(TVertice u : VerticesU) {
+            for(TVertice v : VerticesV) {
+                TArista primerArista = buscar(u.getEtiqueta(), v.getEtiqueta());
+                TArista unoSobrePrimerArista = buscar(v.getEtiqueta(), u.getEtiqueta());
+                TArista a = aristaMasLiviana(unoSobrePrimerArista, primerArista);
+                
+                if(a != null) {
+                    if(min == null){
+                        min = a;
+                    } else if(min.getCosto() > a.getCosto()){
                         min = a;
                     }
                 }
@@ -65,6 +68,25 @@ public class TAristas {
         // devolver tAMin
         
     }
+    
+    private TArista aristaMasLiviana(TArista aristaUno, TArista aristaDos){
+        //Si una de ellas es null
+        if(aristaUno == null){
+            return aristaDos;
+        }
+        else{
+            if(aristaDos == null){
+                return aristaUno;
+            } else{
+                if(aristaUno.getCosto() <= aristaDos.getCosto()){
+                    return aristaUno;
+                } else{
+                    return aristaDos;
+                }
+            }
+        }
+    }
+    
     public TArista Buscarmenor(){
         Collection<TArista> auxA = this.getAristas();
         TArista menor = null;

@@ -58,6 +58,7 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         // pasar el primero de V a U
         VerticesU.addLast(VerticesV.remove());
         boolean vaciaV = VerticesV.isEmpty();
+        
         while (!vaciaV) {
             tempArista = aristas.buscarMin(VerticesU, VerticesV);
             costoPrim += tempArista.getCosto();
@@ -74,9 +75,89 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
                 }
                 i++;
             }
+            
             VerticesU.addLast(VerticesV.remove(i));
             vaciaV = VerticesV.isEmpty();
         }
+        System.out.println("costo AAM: " + costoPrim);
+        TGrafoNoDirigido nuevoGrafo = new TGrafoNoDirigido(VerticesU,AristasAAM);
+        return nuevoGrafo;
+    }
+   
+   // este procedimiento de PRIM usa la lista de aristas expl�cita para
+    // resolver. Por claridad y seguridad, se arman listas de v�rtices para
+    // trabajar,
+    // "VerticesU" y "VerticesV", de forma de hacerlo lo m�s parecido posible al
+    // seudoc�digo abstracto.
+    // al final devuelve un nuevo grafo no dirigido que es el �rbol abarcador de
+    // costo m�nimo obtenido.
+    
+   /**
+    * Devuelve un nuevo grafo, que es el Arbol Abarcador de Costo Mínimo
+    * @return 
+    */
+   public TGrafoNoDirigido Primrose() {
+        int costoPrim = 0;
+        LinkedList<TVertice> VerticesU = new LinkedList<>();
+        LinkedList<TVertice> VerticesV = new LinkedList<>();
+        LinkedList<TArista> AristasAAM = new LinkedList<>();
+        
+        TArista tempArista = null;
+        
+        //Si el grafo está vacío no sigue
+        if (this.getVertices().isEmpty()) {
+            return null;
+        }
+        
+        //Agrego a la lista de Vértices V, todos los vértices del grafo sin relacionarse
+        for(TVertice v : this.getVertices().values())
+        {
+            VerticesV.add(v);
+        }
+        
+        // El primer vértice de V pasa a U
+        VerticesU.addLast(VerticesV.remove());
+        
+        //Mientras queden vértices sin recorrer
+        while (!(VerticesV.isEmpty())) {
+            tempArista = aristas.buscarMin(VerticesU, VerticesV);
+            
+            //No hay conexiones entre V y U, pero sin embargo en V aún quedan vértices...
+            //Por tanto, agrego el primer vértice restante de V a U para poder continuar armando el grafo PRIM
+            if(tempArista == null) {
+                TVertice verticePrueba = VerticesV.remove();
+                VerticesU.addLast(verticePrueba);
+                System.out.println("Agregado a huevo: " + verticePrueba.getEtiqueta());
+                
+                //VerticesU.addLast(VerticesV.remove());
+            } else {
+                //Sumo el costo de la nueva arista al costo total
+                //Agrego el vértice a U, y lo saco de V
+                costoPrim += tempArista.getCosto();
+                AristasAAM.add(tempArista);
+                int i = 0;
+
+                //Busco el vértice en V para agregarlo a U
+                for(TVertice v : VerticesV)
+                {
+                    boolean esElOrigen = v.getEtiqueta().equals(tempArista.getEtiquetaOrigen());
+                    boolean esElDestino = v.getEtiqueta().equals(tempArista.getEtiquetaDestino());
+                    
+                    if(esElOrigen || esElDestino)
+                    {
+                        break;
+                    }
+                    i++;
+                }
+
+                //Agrego a U al mismo tiempo que saco de V
+                VerticesU.addLast(VerticesV.remove(i));
+                
+                System.out.println("Costo: " + tempArista.getCosto() + " Origen: " + tempArista.getEtiquetaOrigen() + " Destino: " + tempArista.getEtiquetaDestino());
+            }
+            }
+            
+        
         System.out.println("costo AAM: " + costoPrim);
         TGrafoNoDirigido nuevoGrafo = new TGrafoNoDirigido(VerticesU,AristasAAM);
         return nuevoGrafo;
@@ -141,6 +222,20 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
       return "El grafo está vacio";
     }
     
+    public String bea(Comparable etiquetaInicial){
+        if (this.getVertices().isEmpty()) {
+            return "El grafo está vacio";
+        } else {
+            TVertice verticeBuscado = this.getVertices().get(etiquetaInicial);
+            
+            if(verticeBuscado != null){
+                return verticeBuscado.bea();
+            } else {
+                return "";
+            }
+        }
+    }
+    
     public TGrafoNoDirigido Kruskal(){
         
         TAristas arist = aristas;
@@ -148,16 +243,14 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         Collection<TVertice> V = this.getVertices().values();
         TGrafoNoDirigido nuevoGrafo = new TGrafoNoDirigido(V,Aristas);
         
-        while(Aristas.size()<V.size()-1){
+        while(Aristas.size() < V.size()-1){
             TArista a = arist.Buscarmenor();
             arist.getAristas().remove(a);
-            ///dados 2 vertizes necesito saber si ya tengo un camino entre esos 2
+            ///dados 2 vertices necesito saber si ya tengo un camino entre esos 2
             ///si no estan conectados agrego la arista
             ///si estan conectados la quito no la agrego
               
-                       nuevoGrafo.insertarArista(a);
-            
-            
+            nuevoGrafo.insertarArista(a);
             arist.getAristas().remove(a);
             
         }
