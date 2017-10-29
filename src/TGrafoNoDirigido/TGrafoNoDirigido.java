@@ -209,17 +209,18 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
     }
     
     public String bea() {
-
+        this.desvisitarVertices();
+        String retorno = "";
         if (this.getVertices().isEmpty()) {
-            return "El grafo está vacio";
+            retorno = "El grafo está vacio";
         } else {
             for (TVertice vertV : this.getVertices().values()) {
                 if (!vertV.getVisitado()) {
-                   return  vertV.bea();
+                   retorno += " " + vertV.bea();
                 }
             }
         }
-      return "El grafo está vacio";
+      return retorno;
     }
     
     public String bea(Comparable etiquetaInicial){

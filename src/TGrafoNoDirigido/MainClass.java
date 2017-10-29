@@ -21,13 +21,13 @@ public class MainClass {
         TGrafoNoDirigido gd = (TGrafoNoDirigido) UtilGrafos.cargarGrafo("./src/verticesBEA2.txt", "./src/aristasBEA2.txt",
                 false, TGrafoNoDirigido.class);
 
-        /*
-        Object[] etiquetasarray = gd.getEtiquetasOrdenado();
-        String bean5 = gd.bea("j");
+        
+        //Object[] etiquetasarray = gd.getEtiquetasOrdenado();
+        String bean5 = gd.bea();
         System.out.println(bean5);
         
         gd.desvisitarVertices();
-         */
+        
         /*
         TGrafoNoDirigido grafoYEE = gd.Primrose();
         String soyBEA = grafoYEE.bea("a");
@@ -35,9 +35,11 @@ public class MainClass {
 
         gd.desvisitarVertices();*/
 
+        /*
         TGrafoNoDirigido segundoGrafoYEE = gd.ElKruskal();
         String soyOtraBEA = segundoGrafoYEE.bea("j");
         System.out.println("Kruskal " + soyOtraBEA);
+*/
 
     }
 
