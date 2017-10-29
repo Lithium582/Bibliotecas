@@ -18,7 +18,7 @@ public class MainClass {
         /*TGrafoNoDirigido gd = (TGrafoNoDirigido) UtilGrafos.cargarGrafo("./src/verticesBEA.txt", "./src/aristasBEA.txt",
             false, TGrafoNoDirigido.class);*/
 
-        TGrafoNoDirigido gd = (TGrafoNoDirigido) UtilGrafos.cargarGrafo("./src/verticesBEA2.txt", "./src/aristasBEA2.txt",
+        TGrafoNoDirigido gd = UtilGrafos.cargarGrafo("./src/verticesBEA2.txt", "./src/aristasBEA2.txt",
                 false, TGrafoNoDirigido.class);
 
         

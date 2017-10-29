@@ -19,6 +19,10 @@ public class TGrafoDirigido implements IGrafoDirigido {
             insertarArista(arista);
         }
     }
+    
+    public TGrafoDirigido() {
+        this.vertices = new HashMap<>();
+    }
 
     /**
      * Metodo encargado de eliminar una arista dada por un origen y destino. En
