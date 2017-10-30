@@ -114,7 +114,6 @@ public class TVertice {
                 }
             }
         }
-
         this.setVisitado(false);
         return retorno;
     }
@@ -162,7 +161,6 @@ public class TVertice {
 
     public boolean tieneCiclo(TCamino camino) {
         setVisitado(true);
-
         boolean ciclo = false;
         for (TAdyacencia adyacencia : this.getAdyacentes()) {
             if (ciclo) {
@@ -179,7 +177,6 @@ public class TVertice {
         }
         camino.getOtrosVertices().remove(this.getEtiqueta());
         return ciclo;
-
     }
 
     public String bea() {
@@ -199,7 +196,6 @@ public class TVertice {
             }
         }
         return tempStr;
-
     }
     
     public int puntosArticulados(LinkedList<TVertice> coleccionArticulados, int[] contador, TCamino caminoPrev){
@@ -209,28 +205,22 @@ public class TVertice {
             this.setVisitado(true);
             Comparable etiquetaPadre = "";
             boolean soyRaiz = true;
-            
             if(! this.etiqueta.equals(caminoPrev.getOrigen().getEtiqueta())){
                 etiquetaPadre = caminoPrev.getOtrosVertices().getLast(); //Extraigo al último vértice en la llamada recursiva
                 soyRaiz = false;
             }
-            
             //Me agrego
             caminoPrev.getOtrosVertices().add(this.etiqueta);
-            
             this.numeroBPF = ++contador[0];
-            
             int bajoParcial = Integer.MAX_VALUE;
             int bajoMaximo = -1;
             int valorRetrocesosParcial = Integer.MAX_VALUE;
             int cantHijosArbolBPF = 0;
-            
             for (TAdyacencia adyacencia : this.getAdyacentes()) {
                 TVertice destino = adyacencia.getDestino();
                 if (!destino.getVisitado()) { //ES UN HIJO
                     cantHijosArbolBPF++;
                     int bajoActual = destino.puntosArticulados(coleccionArticulados, contador, caminoPrev);
-                    
                     bajoParcial = Math.min(bajoParcial, bajoActual);
                     bajoMaximo = Math.max(bajoMaximo, bajoActual);
                 } else {
@@ -240,19 +230,15 @@ public class TVertice {
                         valorRetrocesosParcial = Math.min(vertRetrocesoActual, valorRetrocesosParcial);
                     }
                 }
-                
                 this.numeroBajo = Math.min(Math.min(this.numeroBPF,bajoParcial),valorRetrocesosParcial);
             }
-            
             System.out.println(this.getEtiqueta() + " bajo: " + this.numeroBajo + " BPF: " + this.numeroBPF + " MáximoBajo: " + bajoMaximo);
             if(bajoMaximo >= this.numeroBPF){
                 if(!soyRaiz || (soyRaiz && cantHijosArbolBPF > 1)){
                     coleccionArticulados.add(this);
                 }
             }
-            
             caminoPrev.getOtrosVertices().removeLast();
-            
             return this.numeroBajo;
         }
     }

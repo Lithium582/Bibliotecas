@@ -142,12 +142,10 @@ public class TGrafoDirigido implements IGrafoDirigido {
         Double[][] p = new Double[A.length][A.length];
 
         for (int i = 0; i < A.length; i++) {
+            A[i][i] = 0.0;
             for (int j = 0; j < A.length; j++) {
                 p[i][j] = 0.0;
             }
-        }
-        for (int i = 0; i < A.length; i++) {
-            A[i][i] = 0.0;
         }
         for (int k = 0; k < A.length; k++) {
             for (int i = 0; i < A.length; i++) {
@@ -237,15 +235,12 @@ public class TGrafoDirigido implements IGrafoDirigido {
         TVertice verticeActual = null;
         //Diamante ?
         Collection<Comparable> verticesVisitados = new LinkedList<>();
-
         for (Comparable c : clavesVertices) {
             verticeActual = this.vertices.get(c);
             if (!(verticeActual.getVisitado())) {
                 verticeActual.bpf(verticesVisitados);
             }
-
         }
-
         return verticesVisitados;
     }
 
@@ -294,7 +289,6 @@ public class TGrafoDirigido implements IGrafoDirigido {
             caminos = new TCaminos();
             caminos = verticeOrigen.todosLosCaminos(etiquetaDestino, caminoPrevio, caminos);
         }
-
         return caminos;
     }
 

@@ -180,11 +180,8 @@ public class TVertice implements IVertice{
     public TCaminos todosLosCaminos(Comparable etiquetaDestino, TCamino caminoPrevio, TCaminos losCaminos){
         //Seteamos con TRÚE
         this.setVisitado(true);
-        
         for(TAdyacencia adyacencia : this.getAdyacentes()){
             TVertice destino = adyacencia.getDestino();
-            
-            boolean visit = destino.getVisitado();
             if(!destino.getVisitado()){
                 if(destino.getEtiqueta().compareTo(etiquetaDestino) == 0){
                     TCamino copia = caminoPrevio.copiar();
@@ -197,8 +194,7 @@ public class TVertice implements IVertice{
                     destino.todosLosCaminos(etiquetaDestino, copia, losCaminos);
                 }
             }
-        }
-        
+        }        
         this.setVisitado(false);
         return losCaminos;
         

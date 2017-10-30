@@ -115,23 +115,18 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
     public boolean esFuertementeConexo() {
         this.desvisitarVertices();
         Collection<TVertice> ver = this.getVertices().values();
-        boolean esConexo = true;
-
         for (TVertice v : ver) {
             for (TVertice u : ver) {
                 if (v.getEtiqueta() != u.getEtiqueta()) {
                     TArista aristaUno = aristas.buscar(v.getEtiqueta(), u.getEtiqueta());
                     TArista aristaDos = aristas.buscar(u.getEtiqueta(), v.getEtiqueta());
-                    if (aristaUno != null || aristaDos != null) {
-                        esConexo = esConexo && true;
-
-                    } else {
-                        esConexo = false;
+                    if (aristaUno == null && aristaDos == null) {
+                        return false;
                     }
                 }
             }
         }
-        return esConexo;
+        return true;
     }
     
     public boolean esConexo() {
@@ -245,7 +240,6 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         int[] contador = new int[1];
         contador[0] = 0;
         LinkedList<TVertice> listaRetorno = new LinkedList();
-        
         TCamino caminoPrevio = null;
         
         for (TVertice vertV : this.getVertices().values()) {
@@ -258,5 +252,4 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         
         return listaRetorno;
     }
-
 }
