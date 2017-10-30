@@ -239,4 +239,24 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
 
         return existe;
     }
+    
+    public LinkedList<TVertice> puntosArticulacion(){
+        this.desvisitarVertices();
+        int[] contador = new int[1];
+        contador[0] = 0;
+        LinkedList<TVertice> listaRetorno = new LinkedList();
+        
+        TCamino caminoPrevio = null;
+        
+        for (TVertice vertV : this.getVertices().values()) {
+            caminoPrevio = new TCamino(vertV);
+            
+            if (!vertV.getVisitado()) {
+                vertV.puntosArticulados(listaRetorno, contador, caminoPrevio);
+            }
+        }
+        
+        return listaRetorno;
+    }
+
 }

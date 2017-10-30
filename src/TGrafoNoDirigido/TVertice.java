@@ -9,6 +9,8 @@ public class TVertice {
     private Comparable etiqueta;
     private LinkedList<TAdyacencia> adyacentes;
     private boolean visitado;
+    private int numeroBPF;
+    private int numeroBajo;
 
     public Comparable getEtiqueta() {
         return etiqueta;
@@ -24,7 +26,7 @@ public class TVertice {
         visitado = false;
     }
 
-    public void setVisitado(boolean valor) {
+    private void setVisitado(boolean valor) {
         this.visitado = valor;
     }
 
@@ -88,18 +90,19 @@ public class TVertice {
         }
         return null;
     }
-    
+
     /**
      * Método inspirado en TODOSLOSCAMINOS
+     *
      * @param etVertDest
      * @param caminoPrevio
-     * @return 
+     * @return
      */
     public boolean existeUnCamino(Comparable etVertDest) {
         this.setVisitado(true);
         boolean retorno = false;
         for (TAdyacencia adyacencia : this.getAdyacentes()) {
-            if(retorno){
+            if (retorno) {
                 break;
             }
             TVertice destino = adyacencia.getDestino();
@@ -111,7 +114,7 @@ public class TVertice {
                 }
             }
         }
-        
+
         this.setVisitado(false);
         return retorno;
     }
@@ -159,7 +162,7 @@ public class TVertice {
 
     public boolean tieneCiclo(TCamino camino) {
         setVisitado(true);
-        
+
         boolean ciclo = false;
         for (TAdyacencia adyacencia : this.getAdyacentes()) {
             if (ciclo) {
@@ -171,30 +174,93 @@ public class TVertice {
                 ciclo = w.tieneCiclo(camino);
             } else {
                 ciclo = true;
-                System.out.println("hay ciclo : "+camino.imprimirDesdeClave(w.etiqueta));
+                System.out.println("hay ciclo : " + camino.imprimirDesdeClave(w.etiqueta));
             }
         }
         camino.getOtrosVertices().remove(this.getEtiqueta());
         return ciclo;
 
     }
-     public String bea ( ){
-       String tempStr ="";
+
+    public String bea() {
+        String tempStr = "";
         Queue<TVertice> cola = new LinkedList<>();
         this.setVisitado(true);
         cola.add(this);
         tempStr += this.getEtiqueta();
-        while (!cola.isEmpty()) {            
+        while (!cola.isEmpty()) {
             TVertice v = cola.poll();
-            for (TAdyacencia i : v.adyacentes) {               
-                if (! i.getDestino().getVisitado()){
+            for (TAdyacencia i : v.adyacentes) {
+                if (!i.getDestino().getVisitado()) {
                     i.getDestino().setVisitado(true);
                     cola.add(i.getDestino());
-                    tempStr+=i.getDestino().getEtiqueta();
+                    tempStr += i.getDestino().getEtiqueta();
                 }
-            }            
+            }
         }
         return tempStr;
+
+    }
+    
+    public int puntosArticulados(LinkedList<TVertice> coleccionArticulados, int[] contador, TCamino caminoPrev){
+        if(this.visitado){
+            return this.numeroBPF;
+        } else{
+            this.setVisitado(true);
+            Comparable etiquetaPadre = "";
+            boolean soyRaiz = true;
             
-    } 
+            if(! this.etiqueta.equals(caminoPrev.getOrigen().getEtiqueta())){
+                etiquetaPadre = caminoPrev.getOtrosVertices().getLast(); //Extraigo al último vértice en la llamada recursiva
+                soyRaiz = false;
+            }
+            
+            //Me agrego
+            caminoPrev.getOtrosVertices().add(this.etiqueta);
+            
+            this.numeroBPF = ++contador[0];
+            
+            int bajoParcial = Integer.MAX_VALUE;
+            int bajoMaximo = -1;
+            int valorRetrocesosParcial = Integer.MAX_VALUE;
+            int cantHijosArbolBPF = 0;
+            
+            for (TAdyacencia adyacencia : this.getAdyacentes()) {
+                TVertice destino = adyacencia.getDestino();
+                if (!destino.getVisitado()) { //ES UN HIJO
+                    cantHijosArbolBPF++;
+                    int bajoActual = destino.puntosArticulados(coleccionArticulados, contador, caminoPrev);
+                    
+                    bajoParcial = Math.min(bajoParcial, bajoActual);
+                    bajoMaximo = Math.max(bajoMaximo, bajoActual);
+                } else {
+                    if(!(destino.getEtiqueta().equals(etiquetaPadre))){ //ES ARCO DE RETROCESO
+                        int vertRetrocesoActual = destino.puntosArticulados(coleccionArticulados, contador, caminoPrev);
+                    
+                        valorRetrocesosParcial = Math.min(vertRetrocesoActual, valorRetrocesosParcial);
+                    }
+                }
+                
+                this.numeroBajo = Math.min(Math.min(this.numeroBPF,bajoParcial),valorRetrocesosParcial);
+            }
+            
+            System.out.println(this.getEtiqueta() + " bajo: " + this.numeroBajo + " BPF: " + this.numeroBPF + " MáximoBajo: " + bajoMaximo);
+            if(bajoMaximo >= this.numeroBPF){
+                if(!soyRaiz || (soyRaiz && cantHijosArbolBPF > 1)){
+                    coleccionArticulados.add(this);
+                }
+            }
+            
+            caminoPrev.getOtrosVertices().removeLast();
+            
+            return this.numeroBajo;
+        }
+    }
+    
+    public void desvisitar(){
+        this.setVisitado(false);
+        this.numeroBPF = Integer.MAX_VALUE;
+        this.numeroBajo = Integer.MAX_VALUE;
+    }
+    
 }

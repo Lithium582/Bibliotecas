@@ -238,7 +238,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
 
     public void desvisitarVertices() {
         for (TVertice vertice : this.vertices.values()) {
-            vertice.setVisitado(false);
+            vertice.desvisitar();
         }
     }
 

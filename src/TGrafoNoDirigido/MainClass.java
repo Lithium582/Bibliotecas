@@ -5,6 +5,8 @@
  */
 package TGrafoNoDirigido;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Facundo
@@ -18,11 +20,17 @@ public class MainClass {
         /*TGrafoNoDirigido gd = (TGrafoNoDirigido) UtilGrafos.cargarGrafo("./src/verticesBEA.txt", "./src/aristasBEA.txt",
             false, TGrafoNoDirigido.class);*/
 
-        TGrafoNoDirigido gd = UtilGrafos.cargarGrafo("./src/verticesBEA.txt", "./src/aristasBEA.txt",
+        TGrafoNoDirigido gd = UtilGrafos.cargarGrafo("./src/verticesBEA2.txt", "./src/aristasBEA2.txt",
                 false, TGrafoNoDirigido.class);
         
-        System.out.println(gd.esFuertementeConexo());
-        System.out.println(gd.esConexo());
+        LinkedList<TVertice> verticesArticulados = gd.puntosArticulacion();
+        
+        for(TVertice vet : verticesArticulados){
+            System.out.println(vet.getEtiqueta());
+        }
+        
+        //System.out.println(gd.esFuertementeConexo());
+        //System.out.println(gd.esConexo());
         
         //Object[] etiquetasarray = gd.getEtiquetasOrdenado();
         /*String bean5 = gd.bea();

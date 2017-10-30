@@ -11,10 +11,7 @@ import java.util.LinkedList;
 public class TCamino {
 
     private final TVertice origen;
-    private Collection<Comparable> otrosVertices;
-// es una lista de etiquetas de los vertices
-// ATENCIÓN: PONER LA CLASE CONCRETA QUE									     	     
-// SEA MÁS APROPIADA
+    private LinkedList<Comparable> otrosVertices;
     private Double costoTotal = 0.0d;
 
     public void imprimirEtiquetasConsola() {
@@ -33,12 +30,11 @@ public class TCamino {
     public TCamino(TVertice v) {
         this.origen = v;
         this.otrosVertices = new LinkedList();
-
     }
 
     public boolean agregarAdyacencia(TAdyacencia adyacenciaActual) {
         if (adyacenciaActual.getDestino() != null) {
-            setCostoTotal((Double) getCostoTotal() + ((Number) adyacenciaActual.getCosto()).doubleValue());
+            setCostoTotal(getCostoTotal() + (adyacenciaActual.getCosto()));
             return getOtrosVertices().add(adyacenciaActual.getDestino().getEtiqueta());
         }
         return false;
@@ -46,7 +42,7 @@ public class TCamino {
 
     public boolean eliminarAdyacencia(TAdyacencia adyacenciaActual) {
         if (getOtrosVertices().contains(adyacenciaActual.getDestino().getEtiqueta())) {
-            setCostoTotal((Double) getCostoTotal() - ((Number) adyacenciaActual.getCosto()).doubleValue());
+            setCostoTotal(getCostoTotal() - (adyacenciaActual.getCosto()));
             return getOtrosVertices().remove(adyacenciaActual.getDestino().getEtiqueta());
         }
         return false;
@@ -56,11 +52,11 @@ public class TCamino {
         return origen;
     }
 
-    public Collection<Comparable> getOtrosVertices() {
+    public LinkedList<Comparable> getOtrosVertices() {
         return otrosVertices;
     }
 
-    public void setOtrosVertices(Collection<Comparable> otrosVertices) {
+    public void setOtrosVertices(LinkedList<Comparable> otrosVertices) {
         this.otrosVertices = otrosVertices;
     }
 
