@@ -154,6 +154,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
                 for (int j = 0; j < A.length; j++) {
                     if (A[i][k] + A[k][j] < A[i][j]) {
                         A[i][j] = A[i][k] + A[k][j];
+                        p[i][j] = new Double(k);
                     }
                 }
             }
