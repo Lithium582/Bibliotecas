@@ -112,16 +112,43 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
         return false;
     }
 
-    public boolean esConexo() {
+    public boolean esFuertementeConexo() {
+        this.desvisitarVertices();
         Collection<TVertice> ver = this.getVertices().values();
         boolean esConexo = true;
 
         for (TVertice v : ver) {
             for (TVertice u : ver) {
                 if (v.getEtiqueta() != u.getEtiqueta()) {
-                    if (aristas.buscar(v.getEtiqueta(), u.getEtiqueta()) != null) {
+                    TArista aristaUno = aristas.buscar(v.getEtiqueta(), u.getEtiqueta());
+                    TArista aristaDos = aristas.buscar(u.getEtiqueta(), v.getEtiqueta());
+                    if (aristaUno != null || aristaDos != null) {
                         esConexo = esConexo && true;
 
+                    } else {
+                        esConexo = false;
+                    }
+                }
+            }
+        }
+        return esConexo;
+    }
+    
+    public boolean esConexo() {
+        this.desvisitarVertices();
+        Collection<TVertice> ver = this.getVertices().values();
+        boolean esConexo = true;
+
+        for (TVertice v : ver) {
+            for (TVertice u : ver) {
+                Comparable etiquetaU = u.getEtiqueta();
+                Comparable etiquetaV = v.getEtiqueta();
+                if(etiquetaU.equals("b") && etiquetaV.equals("c")){
+                    int a = 0;
+                }
+                if (!(etiquetaU.equals(etiquetaV))) {
+                    if (this.existeUnCaminoViejo(etiquetaU,etiquetaV)) {
+                        esConexo = esConexo && true;
                     } else {
                         esConexo = false;
                     }
@@ -203,11 +230,11 @@ public class TGrafoNoDirigido extends TGrafoDirigido {
     }
 
     public boolean existeUnCaminoViejo(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
+        this.desvisitarVertices();
         TVertice verticeOrigen = this.buscarVertice(etiquetaOrigen);
         boolean existe = false;
-        TCamino caminoPrevio = new TCamino(verticeOrigen);
         if (verticeOrigen != null) {
-            existe = verticeOrigen.existeUnCamino(etiquetaDestino, caminoPrevio);
+            existe = verticeOrigen.existeUnCamino(etiquetaDestino);
         }
 
         return existe;

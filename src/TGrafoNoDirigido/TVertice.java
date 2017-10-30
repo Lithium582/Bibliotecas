@@ -90,28 +90,29 @@ public class TVertice {
     }
     
     /**
-     * No sé si sirve
+     * Método inspirado en TODOSLOSCAMINOS
      * @param etVertDest
      * @param caminoPrevio
      * @return 
      */
-    public boolean existeUnCamino(Comparable etVertDest, TCamino caminoPrevio) {
+    public boolean existeUnCamino(Comparable etVertDest) {
         this.setVisitado(true);
         boolean retorno = false;
         for (TAdyacencia adyacencia : this.getAdyacentes()) {
+            if(retorno){
+                break;
+            }
             TVertice destino = adyacencia.getDestino();
             if (!destino.getVisitado()) {
                 if (destino.getEtiqueta().compareTo(etVertDest) == 0) {
                     retorno = true;
                 } else {
-                    caminoPrevio.agregarAdyacencia(adyacencia);
-                    retorno = destino.existeUnCamino(etVertDest, caminoPrevio);
-                    caminoPrevio.eliminarAdyacencia(adyacencia);
+                    retorno = destino.existeUnCamino(etVertDest);
                 }
             }
         }
-        this.setVisitado(false);
         
+        this.setVisitado(false);
         return retorno;
     }
 

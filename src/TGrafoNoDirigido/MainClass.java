@@ -18,15 +18,17 @@ public class MainClass {
         /*TGrafoNoDirigido gd = (TGrafoNoDirigido) UtilGrafos.cargarGrafo("./src/verticesBEA.txt", "./src/aristasBEA.txt",
             false, TGrafoNoDirigido.class);*/
 
-        TGrafoNoDirigido gd = UtilGrafos.cargarGrafo("./src/verticesBEA2.txt", "./src/aristasBEA2.txt",
+        TGrafoNoDirigido gd = UtilGrafos.cargarGrafo("./src/verticesBEA.txt", "./src/aristasBEA.txt",
                 false, TGrafoNoDirigido.class);
-
+        
+        System.out.println(gd.esFuertementeConexo());
+        System.out.println(gd.esConexo());
         
         //Object[] etiquetasarray = gd.getEtiquetasOrdenado();
-        String bean5 = gd.bea();
+        /*String bean5 = gd.bea();
         System.out.println(bean5);
         
-        gd.desvisitarVertices();
+        gd.desvisitarVertices();*/
         
         /*
         TGrafoNoDirigido grafoYEE = gd.Primrose();
