@@ -8,8 +8,17 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author R2-D2
+ */
 public class UtilGrafos {
 
+    /**
+     *
+     * @param vertices
+     * @return
+     */
     public static Double[][] obtenerMatrizCostos(Map<Comparable, TVertice> vertices) {
         int cantidadVertices = vertices.size();
         Double[][] matrizCostos = new Double[cantidadVertices][cantidadVertices];
@@ -49,6 +58,11 @@ public class UtilGrafos {
         return matrizCostos;
     }
 
+    /**
+     *
+     * @param matriz
+     * @param vertices
+     */
     public static void imprimirMatriz(Comparable[][] matriz, Map<Comparable, TVertice> vertices) {
         Object[] etiquetas = vertices.keySet().toArray();
         System.out.print("  ");
@@ -69,6 +83,11 @@ public class UtilGrafos {
         }
     }
     
+    /**
+     *
+     * @param matriz
+     * @param vertices
+     */
     public static void imprimirMatrizCsv(Comparable[][] matriz, Map<Comparable, TVertice> vertices) {
         Object[] etiquetas = vertices.keySet().toArray();
         System.out.print("Vertice/Vertice,");
@@ -95,6 +114,12 @@ public class UtilGrafos {
         }
     }
 
+    /**
+     *
+     * @param matriz
+     * @param vertices
+     * @param titulo
+     */
     public static void imprimirMatrizMejorado(Comparable[][] matriz, Map<Comparable, TVertice> vertices, String titulo) {
         if (vertices != null && matriz.length == vertices.keySet().size()) {
 
@@ -166,6 +191,13 @@ public class UtilGrafos {
         System.out.println();
     }
 
+    /**
+     *
+     * @param textoARellenar
+     * @param largoTotal
+     * @param relleno
+     * @return
+     */
     public static String rellenar(String textoARellenar, int largoTotal, char relleno) {
         while (textoARellenar.length() < largoTotal) {
             textoARellenar += relleno;
@@ -173,6 +205,11 @@ public class UtilGrafos {
         return textoARellenar;
     }
 
+    /**
+     *
+     * @param etiquetas
+     * @return
+     */
     public static int stringMasLargo(Comparable[] etiquetas) {
         int mayor = etiquetas[0].toString().length();
         for (int i = 1; i < etiquetas.length; i++) {
@@ -183,6 +220,12 @@ public class UtilGrafos {
         return mayor;
     }
 
+    /**
+     *
+     * @param texto
+     * @param largo
+     * @return
+     */
     public static String devolverCentrado(String texto, int largo) {
         boolean pos = false;
         while (texto.length() < largo) {
@@ -197,6 +240,15 @@ public class UtilGrafos {
         return texto;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param nomArchVert
+     * @param nomArchAdy
+     * @param ignoreHeader
+     * @param t
+     * @return
+     */
     public static <T extends IGrafoDirigido> T cargarGrafo(String nomArchVert, String nomArchAdy, 
             boolean ignoreHeader, Class t  ) {
 

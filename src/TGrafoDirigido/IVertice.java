@@ -15,27 +15,75 @@ import java.util.LinkedList;
  */
 public interface IVertice {
 
+    /**
+     *
+     * @param verticeDestino
+     * @return
+     */
     TAdyacencia buscarAdyacencia(TVertice verticeDestino);
 
+    /**
+     *
+     * @param etiquetaDestino
+     * @return
+     */
     TAdyacencia buscarAdyacencia(Comparable etiquetaDestino);
 
+    /**
+     *
+     * @param nomVerticeDestino
+     * @return
+     */
     boolean eliminarAdyacencia(Comparable nomVerticeDestino);
 
+    /**
+     *
+     * @return
+     */
     LinkedList<TAdyacencia> getAdyacentes();
 
+    /**
+     *
+     * @return
+     */
     Object getDatos();
 
+    /**
+     *
+     * @return
+     */
     Comparable getEtiqueta();
 
+    /**
+     *
+     * @return
+     */
     boolean getVisitado();
 
+    /**
+     *
+     * @param costo
+     * @param verticeDestino
+     * @return
+     */
     boolean insertarAdyacencia(Double costo, TVertice verticeDestino);
 
-   
+    /**
+     *
+     * @return
+     */
     TVertice primerAdyacente();
 
+    /**
+     *
+     * @param valor
+     */
     void setVisitado(boolean valor);
 
+    /**
+     *
+     * @param visitados
+     */
     public void bpf(Collection<Comparable> visitados);
     
 }

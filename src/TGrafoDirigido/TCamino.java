@@ -12,18 +12,38 @@ import java.util.LinkedList;
  * @author Lithium582
  */
 public class TCamino {
+
+    /**
+     *
+     */
     public TVertice origen;
+
+    /**
+     *
+     */
     public LinkedList<Comparable> otrosVertices; //LinkedList es la más apropiada
     private double costoTotal;
     
+    /**
+     *
+     * @return
+     */
     public TVertice getOrigen(){
         return this.origen;
     }
     
+    /**
+     *
+     * @return
+     */
     public LinkedList<Comparable> getOtrosVertices(){
         return this.otrosVertices;
     }
     
+    /**
+     *
+     * @return
+     */
     public double getCosto(){
         return this.costoTotal;
     }
@@ -32,12 +52,21 @@ public class TCamino {
         this.costoTotal = unCosto;
     }
     
+    /**
+     *
+     * @param v
+     */
     public TCamino(TVertice v){
         this.origen = v;
         this.otrosVertices = new LinkedList<Comparable>();
         this.costoTotal = 0;
     }
     
+    /**
+     *
+     * @param adyacenciaActual
+     * @return
+     */
     public boolean agregarAdyacencia(TAdyacencia adyacenciaActual){
         if(adyacenciaActual.getDestino() != null){
             costoTotal += adyacenciaActual.getCosto();
@@ -49,6 +78,11 @@ public class TCamino {
         return false;
     }
     
+    /**
+     *
+     * @param adyacenciaActual
+     * @return
+     */
     public boolean eliminarAdyacencia(TAdyacencia adyacenciaActual){
         String etiquetaAEliminar = adyacenciaActual.getDestino().getEtiqueta().toString();
         if(otrosVertices.contains(etiquetaAEliminar)){
@@ -59,6 +93,9 @@ public class TCamino {
         return false;
     }
     
+    /**
+     *
+     */
     public void imprimirEtiquetas(){
         System.out.println("Verificar que no duplique el origen");
         System.out.println(origen.getEtiqueta());
@@ -68,6 +105,10 @@ public class TCamino {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public String imprimirEtiquetasStr(){
         String resultado = "Verificar que no duplique el origen";
         resultado += "\n" + origen.getEtiqueta();
@@ -79,6 +120,10 @@ public class TCamino {
         return resultado;
     }
     
+    /**
+     *
+     * @return
+     */
     public TCamino copiar(){
         TVertice origen = new TVertice(this.getOrigen().getEtiqueta());
         TCamino copia = new TCamino(origen);

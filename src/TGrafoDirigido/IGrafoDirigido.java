@@ -2,11 +2,31 @@ package TGrafoDirigido;
 
 import java.util.Collection;
 
+/**
+ *
+ * @author R2-D2
+ */
 public interface IGrafoDirigido {
 
+    /**
+     *
+     * @return
+     */
     Collection<Comparable> bpf();
-	Collection<Comparable> bpf(TVertice vertice);
-	Collection<Comparable> bpf(Comparable etiquetaOrigen);
+
+    /**
+     *
+     * @param vertice
+     * @return
+     */
+    Collection<Comparable> bpf(TVertice vertice);
+
+    /**
+     *
+     * @param etiquetaOrigen
+     * @return
+     */
+    Collection<Comparable> bpf(Comparable etiquetaOrigen);
 
     /**
      * @return Etiqueta del centro del grafo
@@ -17,6 +37,9 @@ public interface IGrafoDirigido {
      * Metodo encargado de eliminar una arista dada por un origen y destino. En
      * caso de no existir la arista, retorna falso. En caso de que las etiquetas
      * sean invalidas (no existe el vertice origen o el destino), retorna falso.
+     * @param nomVerticeOrigen
+     * @param nomVerticeDestino
+     * @return 
      */
     boolean eliminarArista(Comparable nomVerticeOrigen, Comparable nomVerticeDestino);
 
@@ -25,6 +48,8 @@ public interface IGrafoDirigido {
      * existir el vertice, retorna falso. En caso de que la etiqueta sea
      * invalida, retorna false.
      *
+     * @param nombreVertice
+     * @return 
      */
     boolean eliminarVertice(Comparable nombreVertice);
 
@@ -33,6 +58,8 @@ public interface IGrafoDirigido {
      * pasadas por parametro deben ser validas (o sea, los vértices origen y
      * destino deben existir en el grafo).
      *
+     * @param etiquetaOrigen
+     * @param etiquetaDestino
      * @return True si existe la arista, false en caso contrario
      */
     boolean existeArista(Comparable etiquetaOrigen, Comparable etiquetaDestino);
@@ -67,6 +94,9 @@ public interface IGrafoDirigido {
      * (miso origen y mismo destino, aunque el costo sea diferente).- 4) El
      * costo debe ser mayor que 0.
      *
+     * @param etiquetaOrigen
+     * @param etiquetaDestino
+     * @param costo
      * @return True si se pudo insertar la arista, false en caso contrario
      */
     public boolean insertarArista(Comparable etiquetaOrigen, Comparable etiquetaDestino, Double costo);
@@ -81,7 +111,26 @@ public interface IGrafoDirigido {
      * @return True si se pudo insertar el vertice, false en caso contrario
      */
     boolean insertarVertice(Comparable unaEtiqueta);
+    
+    /**
+     * Metodo encargado de insertar una arista en el grafo (con un cierto
+     * costo), dado su vertice origen y destino.- Para que la arista sea valida,
+     * se deben cumplir los siguientes casos: 1) Las etiquetas pasadas por
+     * parametros son v�lidas.- 2) Los vertices (origen y destino) existen
+     * dentro del grafo.- 3) No es posible ingresar una arista ya existente
+     * (miso origen y mismo destino, aunque el costo sea diferente).- 4) El
+     * costo debe ser mayor que 0.
+     *
+     * @param arista
+     * @return True si se pudo insertar la adyacencia, false en caso contrario
+     */
+    public boolean insertarArista(TArista arista);
 
+    /**
+     *
+     * @param etiquetaVertice
+     * @return
+     */
     Comparable obtenerExcentricidad(Comparable etiquetaVertice);
 
     /**
@@ -94,5 +143,9 @@ public interface IGrafoDirigido {
      */
     boolean[][] warshall();
 
+    /**
+     *
+     * @return
+     */
     boolean tieneCiclo();
 }

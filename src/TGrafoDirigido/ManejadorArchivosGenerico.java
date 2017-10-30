@@ -8,6 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author R2-D2
+ */
 public class ManejadorArchivosGenerico {
 
     /**
@@ -35,12 +39,24 @@ public class ManejadorArchivosGenerico {
         }
     }
 
+    /**
+     *
+     * @param nombreCompletoArchivo
+     * @param ignoreHeader
+     * @return
+     */
     public static String[] leerArchivoRutaRelativa(String nombreCompletoArchivo, boolean ignoreHeader) {
         String path = ManejadorArchivosGenerico.class
                 .getResource(nombreCompletoArchivo).getPath();
         return leerArchivo(path, ignoreHeader);
     }
     
+    /**
+     *
+     * @param nombreCompletoArchivo
+     * @param ignoreHeader
+     * @return
+     */
     public static String[] leerArchivo(String nombreCompletoArchivo, boolean ignoreHeader) {
         FileReader fr;
         ArrayList<String> listaLineasArchivo = new ArrayList<String>();

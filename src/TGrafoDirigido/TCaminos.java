@@ -14,14 +14,24 @@ import java.util.LinkedList;
 public class TCaminos {
     private final LinkedList<TCamino> caminos;
     
+    /**
+     *
+     * @return
+     */
     public LinkedList<TCamino> getCaminos(){
         return this.caminos;
     }
     
+    /**
+     *
+     */
     public TCaminos(){
         this.caminos = new LinkedList<TCamino>();
     }
     
+    /**
+     *
+     */
     public void imprimir(){
         this.caminos.forEach((camino) -> {
             camino.imprimirEtiquetas();

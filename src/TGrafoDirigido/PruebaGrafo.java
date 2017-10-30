@@ -3,8 +3,16 @@ package TGrafoDirigido;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ *
+ * @author R2-D2
+ */
 public class PruebaGrafo {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         TGrafoDirigido gd = (TGrafoDirigido) UtilGrafos.cargarGrafo("src/UT4/TA05/aeropuertos_1.txt","src/UT4/TA05/conexiones_1.txt",
                 false, TGrafoDirigido.class);

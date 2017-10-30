@@ -14,15 +14,24 @@ import java.util.TreeMap;
 public class TGrafoDirigido implements IGrafoDirigido {
 
     private Map<Comparable, TVertice> vertices; // vertices del grafo.
+
+    /**
+     *
+     */
     public Collection<Comparable> verticesVisitados;
 
+    /**
+     *
+     * @param vertices
+     * @param aristas
+     */
     public TGrafoDirigido(Collection<TVertice> vertices, Collection<TArista> aristas) {
         this.vertices = new HashMap<>();
         for (TVertice vertice : vertices) {
-            insertarVertice(vertice.getEtiqueta());
+            this.insertarVertice(vertice.getEtiqueta());
         }
         for (TArista arista : aristas) {
-            insertarArista(arista);
+            this.insertarArista(arista);
         }
     }
 
@@ -61,29 +70,7 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return getVertices().get(unaEtiqueta) != null;
     }
 
-    /**
-     * Metodo encargado de verificar buscar un vertice dentro del grafo.-
-     *
-     * La etiqueta especificada como parametro debe ser valida.
-     *
-     * @param unaEtiqueta Etiqueta del v�rtice a buscar.-
-     * @return El vertice encontrado. En caso de no existir, retorna nulo.
-     */
-    private TVertice buscarVertice(Comparable unaEtiqueta) {
-        return getVertices().get(unaEtiqueta);
-    }
-
-    /**
-     * Metodo encargado de insertar una arista en el grafo (con un cierto
-     * costo), dado su vertice origen y destino.- Para que la arista sea valida,
-     * se deben cumplir los siguientes casos: 1) Las etiquetas pasadas por
-     * parametros son v�lidas.- 2) Los vertices (origen y destino) existen
-     * dentro del grafo.- 3) No es posible ingresar una arista ya existente
-     * (miso origen y mismo destino, aunque el costo sea diferente).- 4) El
-     * costo debe ser mayor que 0.
-     *
-     * @return True si se pudo insertar la adyacencia, false en caso contrario
-     */
+    @Override
     public boolean insertarArista(TArista arista) {
         if ((arista.getEtiquetaOrigen() != null) && (arista.getEtiquetaDestino() != null)) {
             TVertice vertOrigen = buscarVertice(arista.getEtiquetaOrigen());
@@ -105,6 +92,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return false;
     }
 
+    /**
+     *
+     * @param vertice
+     * @return
+     */
     public boolean insertarVertice(TVertice vertice) {
         Comparable unaEtiqueta = vertice.getEtiqueta();
         if ((unaEtiqueta != null) && (!existeVertice(unaEtiqueta))) {
@@ -114,6 +106,10 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object[] getEtiquetasOrdenado() {
         TreeMap<Comparable, TVertice> mapOrdenado = new TreeMap<>(this.getVertices());
         return mapOrdenado.keySet().toArray();
@@ -165,6 +161,12 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return A;
     }
 
+    /**
+     * Nos devuelve la exentricidad del grafo.
+     *
+     * @param etiquetaVertice
+     * @return
+     */
     @Override
     public Double obtenerExcentricidad(Comparable etiquetaVertice) {
         Double resultado = 0d;
@@ -223,7 +225,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return this.insertarArista(new TArista(etiquetaOrigen, etiquetaDestino, costo));
     }
 
-    //Be pe efe sin par·metros
+    /**
+     * Busqueda en profundidad para todos los vertices del grafo.
+     *
+     * @return
+     */
     @Override
     public Collection<Comparable> bpf() {
         Set<Comparable> clavesVertices = this.vertices.keySet();
@@ -242,6 +248,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return verticesVisitados;
     }
 
+    /**
+     *
+     * @param etiquetaOrigen
+     * @return
+     */
     @Override
     public Collection<Comparable> bpf(Comparable etiquetaOrigen) {
         TVertice verticeActual = null;
@@ -255,6 +266,11 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return verticesVisitados;
     }
 
+    /**
+     *
+     * @param verticeOrigen
+     * @return
+     */
     @Override
     public Collection<Comparable> bpf(TVertice verticeOrigen) {
 
@@ -263,6 +279,12 @@ public class TGrafoDirigido implements IGrafoDirigido {
         return verticesVisitados;
     }
 
+    /**
+     *
+     * @param etiquetaOrigen
+     * @param etiquetaDestino
+     * @return
+     */
     public TCaminos todosLosCaminos(Comparable etiquetaOrigen, Comparable etiquetaDestino) {
         TVertice verticeOrigen = this.buscarVertice(etiquetaOrigen);
         TCaminos caminos = null;
@@ -294,10 +316,25 @@ public class TGrafoDirigido implements IGrafoDirigido {
         }
         return false;
     }
-    
+
+    /**
+     *
+     */
     public void desvisitarVertices() {
         for (TVertice vertice : this.vertices.values()) {
             vertice.setVisitado(false);
         }
+    }
+
+    /**
+     * Metodo encargado de verificar buscar un vertice dentro del grafo.-
+     *
+     * La etiqueta especificada como parametro debe ser valida.
+     *
+     * @param unaEtiqueta Etiqueta del v�rtice a buscar.-
+     * @return El vertice encontrado. En caso de no existir, retorna nulo.
+     */
+    private TVertice buscarVertice(Comparable unaEtiqueta) {
+        return getVertices().get(unaEtiqueta);
     }
 }

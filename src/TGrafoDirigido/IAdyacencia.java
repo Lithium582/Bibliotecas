@@ -12,10 +12,22 @@ package TGrafoDirigido;
  */
 public interface IAdyacencia {
 
+    /**
+     *
+     * @return
+     */
     double getCosto();
 
+    /**
+     *
+     * @return
+     */
     TVertice getDestino();
 
+    /**
+     *
+     * @return
+     */
     Comparable getEtiqueta();
     
 }

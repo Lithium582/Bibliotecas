@@ -13,16 +13,40 @@ package TGrafoDirigido;
  */
 public interface IArista {
 
+    /**
+     *
+     * @return
+     */
     double getCosto();
 
+    /**
+     *
+     * @return
+     */
     Comparable getEtiquetaDestino();
 
+    /**
+     *
+     * @return
+     */
     Comparable getEtiquetaOrigen();
 
+    /**
+     *
+     * @param costo
+     */
     void setCosto(double costo);
 
+    /**
+     *
+     * @param etiquetaDestino
+     */
     void setEtiquetaDestino(Comparable etiquetaDestino);
 
+    /**
+     *
+     * @param etiquetaOrigen
+     */
     void setEtiquetaOrigen(Comparable etiquetaOrigen);
     
 }
