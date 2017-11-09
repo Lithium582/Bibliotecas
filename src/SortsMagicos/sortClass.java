@@ -10,11 +10,11 @@ package SortsMagicos;
  * @author Alf
  */
 public class sortClass {
-    
+
     private int[] vectorIncremento;
 
     public sortClass() {
-        this.vectorIncremento = new int [] {127,17,5,1};
+        this.vectorIncremento = new int[]{127, 17, 5, 1};
     }
 
     public void insercionDirecta(int[] vector) {
@@ -45,10 +45,10 @@ public class sortClass {
             indice++;
         }
     }
-    
-    private int calcularVectorIncremento(int valor){
-        for (int i = this.vectorIncremento.length - 1; i >= 0; i--){
-            if (this.vectorIncremento[i] < valor){
+
+    private int calcularVectorIncremento(int valor) {
+        for (int i = this.vectorIncremento.length - 1; i >= 0; i--) {
+            if (this.vectorIncremento[i] < valor) {
                 return i;
             }
         }
@@ -65,6 +65,60 @@ public class sortClass {
                 }
             }
         }
+    }
+
+    public void quickSort2(int[] vector) {
+        this.quickSort2(vector, 0, vector.length - 1);
+    }
+
+    public void quickSort2(int[] vector, int l, int h) {
+        int p;
+        int left = l;
+        int right = h;
+        if (right > l) {
+            p = encuentraBigote(vector, l, h);
+            
+            if (p != 0) {
+                while (right > left) {
+                    while (vector[left] < p) {
+                        left++;
+                    }
+
+                    while (vector[right] > p) {
+                        right--;
+                    }
+
+                    int aux = vector[left];
+                    vector[left] = vector[right];
+                    vector[right] = aux;
+                }
+                
+                quickSort2(vector, l, right-1);
+                quickSort2(vector, right, h);
+            }
+        }
+    }
+
+    private int encuentraBigote(int[] vector, int l, int h) {
+        int res = vector[l];
+        for (int i = l; i <= h; i++) {
+            if (res != vector[i]) {
+                res = -1;
+                break;
+            }
+        }
+
+        //Significa que encontró claves diferentes
+        if (res == -1) {
+            if (vector[l] >= vector[h]) {
+                return vector[l];
+            }
+
+            return vector[h];
+        }
+
+        return 0;
+
     }
 
     public void quickSort(int[] vector) {
