@@ -176,7 +176,7 @@ public class sortClass {
         }
         return copia;
     }
-    
+
     public String strArray(int[] vector) {
         String strRetorno = "";
         if (vector.length > 0) {
@@ -186,5 +186,37 @@ public class sortClass {
             }
         }
         return strRetorno;
+    }
+
+    public int[] heapSort(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = copia.length / 2 - 1; i >= 0; i--) {
+            heapificar(copia, copia.length, i);
+        }
+        for (int i = copia.length - 1; i >= 0; i--) {
+            int aux = copia[0];
+            copia[0] = copia[i];
+            copia[i] = aux;
+            heapificar(copia, i, 0);
+        }
+        return copia;
+    }
+
+    private void heapificar(int arr[], int n, int i) {
+        int maximo = i;
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        if (l < n && arr[l] > arr[maximo]) {
+            maximo = l;
+        }
+        if (r < n && arr[r] > arr[maximo]) {
+            maximo = r;
+        }
+        if (maximo != i) {
+            int swap = arr[i];
+            arr[i] = arr[maximo];
+            arr[maximo] = swap;
+            heapificar(arr, n, maximo);
+        }
     }
 }

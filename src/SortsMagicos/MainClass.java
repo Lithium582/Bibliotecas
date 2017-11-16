@@ -17,7 +17,7 @@ public class MainClass {
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(vector));
         System.out.println("Metodo:");
-        int[] ordenado = newClass.seleccionDirecta(vector);
+        int[] ordenado = newClass.heapSort(vector);
         System.out.println(newClass.strArray(ordenado));
     }
 }
