@@ -17,8 +17,7 @@ public class MainClass {
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(vector));
         System.out.println("Metodo:");
-        newClass.quickSort2(vector);
-        System.out.println("Culo:");
-        System.out.println(newClass.strArray(vector));
+        int[] ordenado = newClass.seleccionDirecta(vector);
+        System.out.println(newClass.strArray(ordenado));
     }
 }

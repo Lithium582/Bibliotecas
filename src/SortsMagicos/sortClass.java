@@ -17,33 +17,37 @@ public class sortClass {
         this.vectorIncremento = new int[]{127, 17, 5, 1};
     }
 
-    public void insercionDirecta(int[] vector) {
-        for (int i = 1; i < vector.length; i++) {
-            int aux = vector[i];
+    public int[] insercionDirecta(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = 1; i < copia.length; i++) {
+            int aux = copia[i];
             int j = i - 1;
-            while (j >= 0 && aux < vector[j]) {
-                vector[j + 1] = vector[j];
+            while (j >= 0 && aux < copia[j]) {
+                copia[j + 1] = copia[j];
                 j--;
             }
-            vector[j + 1] = aux;
+            copia[j + 1] = aux;
         }
+        return copia;
     }
 
-    public void shellSort(int[] vector) {
-        int indice = this.calcularVectorIncremento(vector.length);
+    public int[] shellSort(int[] vector) {
+        int[] copia = vector.clone();
+        int indice = this.calcularVectorIncremento(copia.length);
         while (indice < this.vectorIncremento.length) {
             int incremento = this.vectorIncremento[indice];
-            for (int i = incremento; i < vector.length; i++) {
-                int aux = vector[i];
+            for (int i = incremento; i < copia.length; i++) {
+                int aux = copia[i];
                 int j = i - incremento;
-                while (j >= 0 && aux < vector[j]) {
-                    vector[j + incremento] = vector[j];
+                while (j >= 0 && aux < copia[j]) {
+                    copia[j + incremento] = copia[j];
                     j -= incremento;
                 }
-                vector[j + incremento] = aux;
+                copia[j + incremento] = aux;
             }
             indice++;
         }
+        return copia;
     }
 
     private int calcularVectorIncremento(int valor) {
@@ -55,48 +59,52 @@ public class sortClass {
         return -1;
     }
 
-    public void bubbleSort(int vector[]) {
-        for (int i = 0; i < vector.length - 1; i++) {
-            for (int j = 0; j < vector.length - i - 1; j++) {
-                if (vector[j] > vector[j + 1]) {
-                    int aux = vector[j];
-                    vector[j] = vector[j + 1];
-                    vector[j + 1] = aux;
+    public int[] bubbleSort(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = 0; i < copia.length - 1; i++) {
+            for (int j = 0; j < copia.length - i - 1; j++) {
+                if (copia[j] > copia[j + 1]) {
+                    int aux = copia[j];
+                    copia[j] = copia[j + 1];
+                    copia[j + 1] = aux;
                 }
             }
         }
+        return copia;
     }
 
-    public void quickSort2(int[] vector) {
-        this.quickSort2(vector, 0, vector.length - 1);
+    public int[] quickSort2(int[] vector) {
+        return this.quickSort2(vector, 0, vector.length - 1);
     }
 
-    public void quickSort2(int[] vector, int l, int h) {
+    public int[] quickSort2(int[] vector, int l, int h) {
+        int[] copia = vector.clone();
         int p;
         int left = l;
         int right = h;
         if (right > l) {
-            p = encuentraBigote(vector, l, h);
-            
+            p = encuentraBigote(copia, l, h);
+
             if (p != 0) {
                 while (right > left) {
-                    while (vector[left] < p) {
+                    while (copia[left] < p) {
                         left++;
                     }
 
-                    while (vector[right] > p) {
+                    while (copia[right] > p) {
                         right--;
                     }
 
-                    int aux = vector[left];
-                    vector[left] = vector[right];
-                    vector[right] = aux;
+                    int aux = copia[left];
+                    copia[left] = copia[right];
+                    copia[right] = aux;
                 }
-                
-                quickSort2(vector, l, right-1);
-                quickSort2(vector, right, h);
+
+                quickSort2(copia, l, right - 1);
+                quickSort2(copia, right, h);
             }
         }
+        return copia;
     }
 
     private int encuentraBigote(int[] vector, int l, int h) {
@@ -113,25 +121,24 @@ public class sortClass {
             if (vector[l] >= vector[h]) {
                 return vector[l];
             }
-
             return vector[h];
         }
-
         return 0;
-
     }
 
-    public void quickSort(int[] vector) {
-        this.quickSort(vector, 0, vector.length - 1);
+    public int[] quickSort(int[] vector) {
+        return this.quickSort(vector, 0, vector.length - 1);
     }
 
-    public void quickSort(int[] vector, int l, int h) {
+    public int[] quickSort(int[] vector, int l, int h) {
         int p;
+        int[] copia = vector.clone();
         if (h > l) {
-            p = particionar(vector, l, h);
-            quickSort(vector, l, p - 1);
-            quickSort(vector, p + 1, h);
+            p = particionar(copia, l, h);
+            quickSort(copia, l, p - 1);
+            quickSort(copia, p + 1, h);
         }
+        return copia;
     }
 
     private int particionar(int[] vector, int l, int h) {
@@ -154,6 +161,22 @@ public class sortClass {
         return firsthigh;
     }
 
+    public int[] seleccionDirecta(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = 0; i < copia.length; i++) {
+            int min = i;
+            for (int j = i; j < copia.length; j++) {
+                if (copia[j] < copia[min]) {
+                    min = j;
+                }
+            }
+            int aux = copia[i];
+            copia[i] = copia[min];
+            copia[min] = aux;
+        }
+        return copia;
+    }
+    
     public String strArray(int[] vector) {
         String strRetorno = "";
         if (vector.length > 0) {
