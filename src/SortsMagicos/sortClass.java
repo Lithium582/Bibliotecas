@@ -14,9 +14,12 @@ public class sortClass {
     private int[] vectorIncremento;
 
     public sortClass() {
-        this.vectorIncremento = new int[]{127, 17, 5, 1};
+        this.vectorIncremento = new int[]{27479, 22531, 18523, 9007, 2003, 1117, 787, 127, 79, 17, 5, 1};
     }
 
+    //----------------------
+    //1 - Insercion directa:
+    //----------------------
     public int[] insercionDirecta(int[] vector) {
         int[] copia = vector.clone();
         for (int i = 1; i < copia.length; i++) {
@@ -31,6 +34,129 @@ public class sortClass {
         return copia;
     }
 
+    //--------------
+    //2 - BubbleSort:
+    //--------------
+    public int[] bubbleSort(int[] vector) {
+        int[] copia = vector.clone();
+        boolean ordenado = false;
+        int ultimo = vector.length - 1;
+        while (!ordenado) {
+            ordenado = true;
+            for (int i = 0; i < ultimo; i++) {
+                if (copia[i] > copia[i + 1]) {
+                    int aux = copia[i];
+                    copia[i] = copia[i + 1];
+                    copia[i + 1] = aux;
+                    ordenado = false;
+                }
+            }
+            ultimo--;
+        }
+        return copia;
+    }
+
+    //--------------
+    //3 - QuickSort:
+    //--------------
+    public int[] quickSort(int[] vector) {
+        int[] copia = vector.clone();
+        return this.quickSort(copia, 0, copia.length - 1);
+    }
+
+    private int[] quickSort(int[] vector, int i, int j) {
+        if (vector.length > 1) {
+            int izq = i;
+            int der = j;
+            int pivote = vector[izq + (der - izq) / 2];
+            while (izq <= der) {
+                while ((vector[izq] < pivote) && (izq < j)) {
+                    izq++;
+                }
+                while ((pivote < vector[der]) && (der > i)) {
+                    der--;
+                }
+                if (izq <= der) {
+                    int aux = vector[izq];
+                    vector[izq] = vector[der];
+                    vector[der] = aux;
+                    izq++;
+                    der--;
+                }
+            }
+            if (i < der) {
+                quickSort(vector, i, der);
+            }
+            if (izq < j) {
+                quickSort(vector, izq, j);
+            }
+        }
+        return vector;
+    }
+
+    //----------------------
+    //4 - Seleccion Directa:
+    //----------------------
+    public int[] seleccionDirecta(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = 0; i < copia.length; i++) {
+            int min = i;
+            for (int j = i; j < copia.length; j++) {
+                if (copia[j] < copia[min]) {
+                    min = j;
+                }
+            }
+            int aux = copia[i];
+            copia[i] = copia[min];
+            copia[min] = aux;
+        }
+        return copia;
+    }
+
+    //-------------
+    //5 - HeapSort:
+    //-------------
+    public int[] heapSort(int[] vector) {
+        int[] copia = vector.clone();
+        for (int i = copia.length / 2 - 1; i >= 0; i--) {
+            hippieficar(copia, copia.length, i);
+        }
+        for (int i = copia.length - 1; i >= 0; i--) {
+            int aux = copia[0];
+            copia[0] = copia[i];
+            copia[i] = aux;
+            hippieficar(copia, i, 0);
+        }
+        return copia;
+    }
+
+    /**
+     *
+     * @param arr
+     * @param n
+     * @param i
+     */
+    private void hippieficar(int arr[], int n, int i) {
+        int maximo = i;
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        if (l < n && arr[l] > arr[maximo]) {
+            maximo = l;
+        }
+        if (r < n && arr[r] > arr[maximo]) {
+            maximo = r;
+        }
+        if (maximo != i) {
+            int swap = arr[i];
+            arr[i] = arr[maximo];
+            arr[maximo] = swap;
+            hippieficar(arr, n, maximo);
+        }
+    }
+    
+    //-------------
+    //6 - shellSort:
+    //-------------
     public int[] shellSort(int[] vector) {
         int[] copia = vector.clone();
         int indice = this.calcularVectorIncremento(copia.length);
@@ -59,164 +185,40 @@ public class sortClass {
         return -1;
     }
 
-    public int[] bubbleSort(int[] vector) {
-        int[] copia = vector.clone();
-        for (int i = 0; i < copia.length - 1; i++) {
-            for (int j = 0; j < copia.length - i - 1; j++) {
-                if (copia[j] > copia[j + 1]) {
-                    int aux = copia[j];
-                    copia[j] = copia[j + 1];
-                    copia[j + 1] = aux;
-                }
-            }
-        }
-        return copia;
-    }
-
-    public int[] quickSort2(int[] vector) {
-        return this.quickSort2(vector, 0, vector.length - 1);
-    }
-
-    public int[] quickSort2(int[] vector, int l, int h) {
-        int[] copia = vector.clone();
-        int p;
-        int left = l;
-        int right = h;
-        if (right > l) {
-            p = encuentraBigote(copia, l, h);
-
-            if (p != 0) {
-                while (right > left) {
-                    while (copia[left] < p) {
-                        left++;
-                    }
-
-                    while (copia[right] > p) {
-                        right--;
-                    }
-
-                    int aux = copia[left];
-                    copia[left] = copia[right];
-                    copia[right] = aux;
-                }
-
-                quickSort2(copia, l, right - 1);
-                quickSort2(copia, right, h);
-            }
-        }
-        return copia;
-    }
-
-    private int encuentraBigote(int[] vector, int l, int h) {
-        int res = vector[l];
-        for (int i = l; i <= h; i++) {
-            if (res != vector[i]) {
-                res = -1;
-                break;
-            }
-        }
-
-        //Significa que encontró claves diferentes
-        if (res == -1) {
-            if (vector[l] >= vector[h]) {
-                return vector[l];
-            }
-            return vector[h];
-        }
-        return 0;
-    }
-
-    public int[] quickSort(int[] vector) {
-        return this.quickSort(vector, 0, vector.length - 1);
-    }
-
-    public int[] quickSort(int[] vector, int l, int h) {
-        int p;
-        int[] copia = vector.clone();
-        if (h > l) {
-            p = particionar(copia, l, h);
-            quickSort(copia, l, p - 1);
-            quickSort(copia, p + 1, h);
-        }
-        return copia;
-    }
-
-    private int particionar(int[] vector, int l, int h) {
-        int contador;
-        int p;
-        int firsthigh;
-        p = h;
-        firsthigh = l;
-        for (contador = l; contador < h; contador++) {
-            if (vector[contador] < vector[p]) {
-                int aux = vector[contador];
-                vector[contador] = vector[firsthigh];
-                vector[firsthigh] = aux;
-                firsthigh++;
-            }
-        }
-        int aux = vector[p];
-        vector[p] = vector[firsthigh];
-        vector[firsthigh] = aux;
-        return firsthigh;
-    }
-
-    public int[] seleccionDirecta(int[] vector) {
-        int[] copia = vector.clone();
-        for (int i = 0; i < copia.length; i++) {
-            int min = i;
-            for (int j = i; j < copia.length; j++) {
-                if (copia[j] < copia[min]) {
-                    min = j;
-                }
-            }
-            int aux = copia[i];
-            copia[i] = copia[min];
-            copia[min] = aux;
-        }
-        return copia;
-    }
-
+    /**
+     * Metodo que se encarga de recorrer el array y nos devuelve una cadena de
+     * caracteres conteniendo todos los elementos del mismo, separados por un
+     * guion. Si el array esta vacio, devuelve una cadena vacia.
+     *
+     * @param vector Vector de elementos.
+     * @return Cadena de caracteres conteniendo los elementos del array.
+     */
     public String strArray(int[] vector) {
         String strRetorno = "";
         if (vector.length > 0) {
             strRetorno = String.valueOf(vector[0]);
             for (int i = 1; i < vector.length; i++) {
-                strRetorno += "," + String.valueOf(vector[i]);
+                strRetorno += "-" + String.valueOf(vector[i]);
             }
         }
         return strRetorno;
     }
 
-    public int[] heapSort(int[] vector) {
-        int[] copia = vector.clone();
-        for (int i = copia.length / 2 - 1; i >= 0; i--) {
-            heapificar(copia, copia.length, i);
+    /**
+     * Metodo encargado de verificar si el conjunto de datos se encuentra
+     * ordenado.
+     *
+     * @param vector Conjunto de datos.
+     * @return booleano indicando si el vector se encuentra ordenado o no.
+     */
+    public boolean estaOrdenado(int[] vector) {
+        boolean ordenado = true;
+        for (int i = 0; i < vector.length - 1; i++) {
+            if (vector[i] > vector[i + 1]) {
+                ordenado = false;
+                break;
+            }
         }
-        for (int i = copia.length - 1; i >= 0; i--) {
-            int aux = copia[0];
-            copia[0] = copia[i];
-            copia[i] = aux;
-            heapificar(copia, i, 0);
-        }
-        return copia;
-    }
-
-    private void heapificar(int arr[], int n, int i) {
-        int maximo = i;
-        int l = 2 * i + 1;
-        int r = 2 * i + 2;
-        if (l < n && arr[l] > arr[maximo]) {
-            maximo = l;
-        }
-        if (r < n && arr[r] > arr[maximo]) {
-            maximo = r;
-        }
-        if (maximo != i) {
-            int swap = arr[i];
-            arr[i] = arr[maximo];
-            arr[maximo] = swap;
-            heapificar(arr, n, maximo);
-        }
+        return ordenado;
     }
 }
