@@ -17,7 +17,10 @@ public class MainClass {
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(vector));
         System.out.println("Metodo:");
-        int[] ordenado = newClass.cuentaPorDistribucion(vector,6,51);
+        //int[] ordenado = newClass.cuentaPorDistribucion(vector,6,51);
+        int[] baldeVector = new int[] {1,15,100,200,900,999,666,555,444,888,777,767,757,123,321,213,231};
+        int[] ordenado = newClass.esUnBaldeSort(baldeVector, 10);
+        
         System.out.println(newClass.strArray(ordenado));
     }
 }

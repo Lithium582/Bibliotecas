@@ -204,6 +204,58 @@ public class sortClass {
         }
         return vectorFinal;
     }
+    
+    public int[] esUnBaldeSort(int[] vectorP, int cantidadBaldes) {
+        Double m = (vectorP.length / cantidadBaldes) * 1.5;
+        int m2 = m.intValue() + 1;
+        
+        int[][] matrizConBaldes = new int[cantidadBaldes][10];
+        
+        for(int i=0; i < vectorP.length; i++){
+            insertarEnBalde(vectorP[i], matrizConBaldes);
+        }
+        
+        int[] vectorFinal = new int[vectorP.length];
+        for(int i = 0; i < matrizConBaldes.length; i++){
+            int[] subVectorOrdenado = seleccionDirecta(matrizConBaldes[i]);
+            System.out.println(strArray(subVectorOrdenado));
+            vectorFinal = subConcatenar(vectorFinal, subVectorOrdenado);
+        }
+        
+        return vectorFinal;
+    }
+    
+    public void insertarEnBalde(int valor, int[][] matriz){
+        int valor2 = valor;
+        int cantidadBaldes = matriz[0].length;
+        
+        if(valor2 >= cantidadBaldes){
+            while(valor2 >= cantidadBaldes){
+                valor2 = valor2 / cantidadBaldes;
+            }
+        }
+        
+        for(int i = 0; i < matriz[valor2].length; i++){
+            if(matriz[valor2][i] == 0){
+                matriz[valor2][i] = valor;
+                break;
+            }
+        }
+    }
+    
+    public int[] subConcatenar(int[] vector1, int[] vector2){
+        int[] vectorReturn = new int[vector1.length + vector2.length];
+        
+        for(int i = 0; i < vector1.length; i++){
+            vectorReturn[i] = vector1[i];
+        }
+        
+        for(int i = 0; i < vector2.length; i++){
+            vectorReturn[i + vector1.length] = vector2[i];
+        }
+        
+        return vectorReturn;
+    }
 
     /**
      * Metodo que se encarga de recorrer el array y nos devuelve una cadena de
