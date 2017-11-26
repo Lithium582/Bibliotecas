@@ -13,11 +13,11 @@ public class MainClass {
 
     public static void main(String[] args) {
         sortClass newClass = new sortClass();
-        int[] vector = new int[] {10,6,1,9,5,21,2,13,4,29};
+        int[] vector = new int[] {6,11,9,51,21,29,13,40,10};
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(vector));
         System.out.println("Metodo:");
-        int[] ordenado = newClass.heapSort(vector);
+        int[] ordenado = newClass.cuentaPorDistribucion(vector,6,51);
         System.out.println(newClass.strArray(ordenado));
     }
 }

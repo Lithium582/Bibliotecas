@@ -153,7 +153,7 @@ public class sortClass {
             hippieficar(arr, n, maximo);
         }
     }
-    
+
     //-------------
     //6 - shellSort:
     //-------------
@@ -183,6 +183,26 @@ public class sortClass {
             }
         }
         return -1;
+    }
+
+    public int[] cuentaPorDistribucion(int[] vector, int menorValor, int mayorValor) {
+        int[] copia = vector.clone();
+        int[] vectorFinal = new int[copia.length];
+        if (menorValor <= mayorValor) {
+            int[] cuenta = new int[mayorValor - menorValor + 1];
+            for (int j = 0; j < copia.length; j++) {
+                cuenta[copia[j] - menorValor]++;
+            }
+            for (int i = 0; i < cuenta.length - 1; i++) {
+                cuenta[i + 1] += cuenta[i];
+            }
+            for (int j = copia.length - 1; j >= 0 ; j--) {
+                int aux = cuenta[copia[j] - menorValor];
+                vectorFinal[aux - 1] = copia[j];
+                cuenta[copia[j] - menorValor]--;
+            }
+        }
+        return vectorFinal;
     }
 
     /**
