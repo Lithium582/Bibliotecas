@@ -28,7 +28,7 @@ public class MainClass {
         
         System.out.println(newClass.strArray(radixVector));
         System.out.println("Metodo:");
-        int[] ordenadoRadix = newClass.radixsort(radixVector);
+        int[] ordenadoRadix = newClass.RADIXSort(radixVector);
         System.out.println("RADIX:");
         System.out.println(newClass.strArray(ordenadoRadix));
     }
