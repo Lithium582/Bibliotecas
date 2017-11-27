@@ -208,8 +208,13 @@ public class sortClass {
         return vectorFinal;
     }
 
+    public static int valorDefault = -10;
     public int[] esUnBaldeSort(int[] vectorP, int cantidadBaldes) {
         int[][] matrizConBaldes = new int[cantidadBaldes][cantidadBaldes];
+        
+        for(int i = 0; i < matrizConBaldes.length;i++){
+            Arrays.fill(matrizConBaldes[i], valorDefault);
+        }
 
         int cantCifras = enontrarMaximaCifra(vectorP);
 
@@ -218,6 +223,8 @@ public class sortClass {
         }
 
         int[] vectorFinal = new int[vectorP.length];
+        Arrays.fill(vectorFinal, valorDefault);
+        
         for (int i = 0; i < matrizConBaldes.length; i++) {
             int[] subVectorOrdenado = seleccionDirecta(matrizConBaldes[i]);
             vectorFinal = subConcatenar(vectorFinal, subVectorOrdenado);
@@ -246,7 +253,7 @@ public class sortClass {
         }
 
         for (int i = 0; i < matriz[valor2].length; i++) {
-            if (matriz[valor2][i] == 0) {
+            if (matriz[valor2][i] == valorDefault) {
                 matriz[valor2][i] = valor;
                 break;
             }
@@ -260,11 +267,11 @@ public class sortClass {
 
         for (int i = 0; i < v1Largo + v2Largo; i++) {
             if (i < v1Largo) {
-                if (vector1[i] != 0) {
+                if (vector1[i] != valorDefault) {
                     cantidadElementos++;
                 }
             } else {
-                if (vector2[i - v1Largo] != 0) {
+                if (vector2[i - v1Largo] != valorDefault) {
                     cantidadElementos++;
                 }
             }
@@ -273,12 +280,12 @@ public class sortClass {
         int posActualRet = 0;
         for (int i = 0; i < v1Largo + v2Largo; i++) {
             if (i < v1Largo) {
-                if (vector1[i] != 0) {
+                if (vector1[i] != valorDefault) {
                     vectorReturn[posActualRet] = vector1[i];
                     posActualRet++;
                 }
             } else {
-                if (vector2[i - v1Largo] != 0) {
+                if (vector2[i - v1Largo] != valorDefault) {
                     vectorReturn[posActualRet] = vector2[i - v1Largo];
                     posActualRet++;
                 }
