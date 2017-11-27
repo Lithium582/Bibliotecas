@@ -5,6 +5,9 @@
  */
 package SortsMagicos;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 /**
  *
  * @author Alf
@@ -206,18 +209,18 @@ public class sortClass {
     }
     
     public int[] esUnBaldeSort(int[] vectorP, int cantidadBaldes) {
-        Double m = (vectorP.length / cantidadBaldes) * 1.5;
-        int m2 = m.intValue() + 1;
+        int[][] matrizConBaldes = new int[cantidadBaldes][cantidadBaldes];
         
-        int[][] matrizConBaldes = new int[cantidadBaldes][10];
+        int cantCifras = enontrarMaximaCifra(vectorP);
         
         for(int i=0; i < vectorP.length; i++){
-            insertarEnBalde(vectorP[i], matrizConBaldes);
+            insertarEnBalde(vectorP[i], matrizConBaldes, cantCifras);
         }
         
         int[] vectorFinal = new int[vectorP.length];
         for(int i = 0; i < matrizConBaldes.length; i++){
             int[] subVectorOrdenado = seleccionDirecta(matrizConBaldes[i]);
+            System.out.println("Balde " + i);
             System.out.println(strArray(subVectorOrdenado));
             vectorFinal = subConcatenar(vectorFinal, subVectorOrdenado);
         }
@@ -225,18 +228,33 @@ public class sortClass {
         return vectorFinal;
     }
     
-    public void insertarEnBalde(int valor, int[][] matriz){
-        int valor2 = valor;
-        int cantidadBaldes = matriz[0].length;
-        
-        if(valor2 >= cantidadBaldes){
-            while(valor2 >= cantidadBaldes){
-                valor2 = valor2 / cantidadBaldes;
+    public int enontrarMaximaCifra(int[] vectorParaEncontrar){
+        int valMax = 0;
+        for(int i = 0; i < vectorParaEncontrar.length; i++){
+            if (vectorParaEncontrar[i] > valMax){
+                valMax = vectorParaEncontrar[i];
             }
         }
         
-        for(int i = 0; i < matriz[valor2].length; i++){
-            if(matriz[valor2][i] == 0){
+        return String.valueOf(valMax).length() - 1;
+    }
+    
+    public void insertarEnBalde(int valor, int[][] matriz, int cantCifras){
+        int valor2 = valor;
+        int cantidadBaldes = matriz[0].length;
+        
+        for (int i = 0; i < cantCifras; i++){
+            valor2 = valor2 / cantidadBaldes;
+        }
+        
+//        if(valor2 >= cantidadBaldes) {
+//            while(valor2 >= cantidadBaldes) {
+//                valor2 = valor2 / cantidadBaldes;
+//            }
+//        }
+        
+        for(int i = 0; i < matriz[valor2].length; i++) {
+            if(matriz[valor2][i] == 0) {
                 matriz[valor2][i] = valor;
                 break;
             }
@@ -244,14 +262,38 @@ public class sortClass {
     }
     
     public int[] subConcatenar(int[] vector1, int[] vector2){
-        int[] vectorReturn = new int[vector1.length + vector2.length];
+        int v1Largo = vector1.length;
+        int v2Largo = vector2.length;
         
-        for(int i = 0; i < vector1.length; i++){
-            vectorReturn[i] = vector1[i];
+        int cantidadElementos = 0;
+        
+        for(int i = 0; i < v1Largo + v2Largo; i++){
+            if(i < v1Largo){
+                if(vector1[i] != 0){
+                   cantidadElementos ++; 
+                }
+            } else{
+                if(vector2[i - v1Largo] != 0){
+                   cantidadElementos ++; 
+                }
+            }
         }
         
-        for(int i = 0; i < vector2.length; i++){
-            vectorReturn[i + vector1.length] = vector2[i];
+        int[] vectorReturn = new int[cantidadElementos];
+        int posActualRet = 0;
+        
+        for(int i = 0; i < v1Largo + v2Largo; i++){
+            if(i < v1Largo){
+                if(vector1[i] != 0){
+                   vectorReturn[posActualRet] = vector1[i];
+                   posActualRet ++;
+                }
+            } else{
+                if(vector2[i - v1Largo] != 0){
+                   vectorReturn[posActualRet] = vector2[i - v1Largo];
+                   posActualRet ++;
+                }
+            }
         }
         
         return vectorReturn;
@@ -293,4 +335,63 @@ public class sortClass {
         }
         return ordenado;
     }
+    
+    static int getMax(int arr[])
+    {
+        int mx = arr[0];
+        for (int i = 1; i < arr.length; i++)
+            if (arr[i] > mx)
+                mx = arr[i];
+        return mx;
+    }
+ 
+    // A function to do counting sort of arr[] according to
+    // the digit represented by exp.
+    public void countSort(int arr[], int exp)
+    {
+        int n = arr.length;
+        int output[] = new int[n]; // output array
+        int i;
+        int count[] = new int[10];
+        Arrays.fill(count,0);
+ 
+        // Store count of occurrences in count[]
+        for (i = 0; i < n; i++)
+            count[ (arr[i]/exp)%10 ]++;
+ 
+        // Change count[i] so that count[i] now contains
+        // actual position of this digit in output[]
+        for (i = 1; i < 10; i++)
+            count[i] += count[i - 1];
+ 
+        // Build the output array
+        for (i = n - 1; i >= 0; i--)
+        {
+            output[count[ (arr[i]/exp)%10 ] - 1] = arr[i];
+            count[ (arr[i]/exp)%10 ]--;
+        }
+ 
+        // Copy the output array to arr[], so that arr[] now
+        // contains sorted numbers according to curent digit
+        for (i = 0; i < n; i++)
+            arr[i] = output[i];
+    }
+ 
+    // The main function to that sorts arr[] of size n using
+    // Radix Sort
+    public int[] radixsort(int[] arr)
+    {
+        // Find the maximum number to know number of digits
+        int m = getMax(arr);
+ 
+        // Do counting sort for every digit. Note that instead
+        // of passing digit number, exp is passed. exp is 10^i
+        // where i is current digit number
+        for (int exp = 1; m/exp > 0; exp *= 10){
+            countSort(arr, exp);
+        }
+        
+        return arr;
+    }
+    
 }
