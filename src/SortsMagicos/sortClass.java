@@ -6,6 +6,7 @@
 package SortsMagicos;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 /**
@@ -378,4 +379,80 @@ public class sortClass {
         }
         return max;
     }
+    
+        
+    public void countSortRadixFecha(Calendar[] vector, int exp, int posicion) {
+        //Posición indica por cuál de los tres campos de fecha se ordena
+        //1-Dia, 2-Mes, 5-Dia
+        //Calendar[] copia = vector.clone();
+        
+        //int N = copia.length;
+        int N = vector.length;
+        Calendar[] salida = new Calendar[N];
+        int i;
+        int contador[] = new int[10];
+
+        for (i = 0; i < N; i++) {
+            //Calendar fechaActual = copia[i];
+            Calendar fechaActual = vector[i];
+            int val = fechaActual.get(posicion);
+            
+            //contador[(copia[i] / exp) % 10]++;
+            contador[(val / exp) % 10]++;
+        }
+        
+        for (i = 1; i < 10; i++) {
+            contador[i] += contador[i - 1];
+        }
+
+        for (i = N - 1; i >= 0; i--) {
+            //Calendar fechaActual = copia[i];
+            Calendar fechaActual = vector[i];
+            int val = fechaActual.get(posicion);
+            
+            //salida[contador[(copia[i] / exp) % 10] - 1] = copia[i];
+            //contador[(copia[i] / exp) % 10]--;
+            
+            //salida[contador[(val / exp) % 10] - 1] = copia[i];
+            salida[contador[(val / exp) % 10] - 1] = vector[i];
+            contador[(val / exp) % 10]--;
+        }
+
+        for (i = 0; i < N; i++) {
+            //copia[i] = salida[i];
+            vector[i] = salida[i];
+        }
+    }
+
+    public Calendar[] RADIXFecha(Calendar[] vector) {
+        int max = 0;
+        int pos = 0;
+        for(int i = 1; i <= 3; i++){
+            //int max = obtenerMaximo(vector);
+            switch(i){
+                case 1:{ //Dia
+                    max = 31;
+                    pos = 5;
+                    break;
+                }
+                case 2:{ //Mes
+                    max = 12;
+                    pos = 2;
+                    break;
+                }
+                case 3:{ //Año
+                    max = 9999;
+                    pos = 1;
+                    break;
+                }
+            }
+            
+            for (int exp = 1; max / exp > 0; exp *= 10) {
+                countSortRadixFecha(vector, exp, pos);
+            }
+        }
+        
+        return vector;
+    }
+
 }

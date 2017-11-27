@@ -16,7 +16,7 @@ public class MainClass {
 
     public static void main(String[] args) {
         sortClass newClass = new sortClass();
-        PruebaDate pd = new PruebaDate();
+        //PruebaDate pd = new PruebaDate();
         
         //Prueba Date Radix
         
@@ -50,7 +50,8 @@ public class MainClass {
                 System.out.println(unVectorConCalendarios[i].getTime());
             }
             
-            Calendar[] unNuevoCalArray = pd.RADIXSort(unVectorConCalendarios);
+            //Calendar[] unNuevoCalArray = pd.RADIXFecha(unVectorConCalendarios);
+            Calendar[] unNuevoCalArray = newClass.RADIXFecha(unVectorConCalendarios);
             
             System.out.println("RADITZ enfechado");
             for(int i = 0; i < unNuevoCalArray.length;i++){
