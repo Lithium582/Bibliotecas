@@ -19,7 +19,7 @@ public class MainClass {
         PruebaDate pd = new PruebaDate();
         
         //Prueba Date Radix
-        /*
+        
         try {
             FileManager fm = new FileManager();
             ArrayList<String> arrayFechas = fm.readFile("src/fechasRADIX.csv", false);
@@ -37,16 +37,22 @@ public class MainClass {
                     objCal.set(ano, mes, dia);
 
                     arrayCalendars.add(objCal);
-                    System.out.println(objCal.getTime());
+                    //System.out.println(objCal.getTime());
                 }
             }
 
             Calendar[] unVectorConCalendarios = new Calendar[arrayCalendars.size()];
             arrayCalendars.toArray(unVectorConCalendarios);
             
+            System.out.println("CUENTAS:");
+            System.out.println("Inicial:");
+            for(int i = 0; i < unVectorConCalendarios.length; i++){
+                System.out.println(unVectorConCalendarios[i].getTime());
+            }
+            
             Calendar[] unNuevoCalArray = pd.RADIXSort(unVectorConCalendarios);
             
-            System.out.println("ORDENADO?");
+            System.out.println("RADITZ enfechado");
             for(int i = 0; i < unNuevoCalArray.length;i++){
                 System.out.println(unNuevoCalArray[i].getTime());
             }
@@ -54,28 +60,44 @@ public class MainClass {
         } catch (Exception ex) {
             System.out.println("YEEEEEEEEEEEEEEEEEEEE");
         }
-        */
+        
         
         //Por cuentas
-        /*
+        
         int[] vector = new int[] {6,11,9,51,21,29,13,40,10};
+        System.out.println("CUENTAS:");
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(vector));
         
-        int[] ordenado = newClass.cuentaPorDistribucion(vector,6,51);
-        System.out.println("Metodo:");
-        System.out.println(newClass.strArray(ordenado));
+        int[] ordenadoCuentas = newClass.cuentaPorDistribucion(vector,6,51);
+        System.out.println("Ordenado por Cuentas:");
+        System.out.println(newClass.strArray(ordenadoCuentas));
         
-        */
-        //Por RADIX
         
-        int[] baldeVector = new int[] {-1,0,2345,1984,2017,16,32,42,9644,134,137,139,141,582,494,396,21};
+        //Por Balde
+        
+        int[] baldeVector = new int[] {0,2345,1984,2017,16,32,42,9644,134,137,139,141,582,494,396,21};
+        System.out.println("Baldes");
         System.out.println("Inicial:");
         System.out.println(newClass.strArray(baldeVector));
         
-        int[] ordenado = newClass.esUnBaldeSort(baldeVector, 10);
-        System.out.println("Metodo:");
-        System.out.println(newClass.strArray(ordenado));
+        int[] ordenadoBalde = newClass.esUnBaldeSort(baldeVector, 10);
+        System.out.println("Ordenado por Balde:");
+        System.out.println(newClass.strArray(ordenadoBalde));
+        
+        
+        //RADIX
+        
+        int[] radixVector = new int[] {2017,1984,2345,0,32,42,9644,134,137,139,141,582,494,396,21};
+        
+        System.out.println("Radix con Números");
+        System.out.println("Inicial:");
+        System.out.println(newClass.strArray(radixVector));
+        
+        int[] ordenadoRadix = newClass.RADIXSort(radixVector);
+        System.out.println("RADITZ numerado:");
+        System.out.println(newClass.strArray(ordenadoRadix));
+        
     }
 }
 

@@ -208,7 +208,10 @@ public class sortClass {
         return vectorFinal;
     }
 
-    public static int valorDefault = -10;
+    //Valor seteado por default para llenar los arrays
+    public static int valorDefault = -1;
+    //Fin valor seteado por default para llenar los arrays
+    
     public int[] esUnBaldeSort(int[] vectorP, int cantidadBaldes) {
         int[][] matrizConBaldes = new int[cantidadBaldes][cantidadBaldes];
         
@@ -294,7 +297,7 @@ public class sortClass {
         return vectorReturn;
     }
 
-    public void countSort(int vector[], int exp) {
+    public int[] countSort(int vector[], int exp) {
         int[] copia = vector.clone();
         int N = copia.length;
         int salida[] = new int[N];
@@ -317,12 +320,14 @@ public class sortClass {
         for (i = 0; i < N; i++) {
             copia[i] = salida[i];
         }
+        
+        return copia;
     }
 
     public int[] RADIXSort(int[] vector) {
         int max = obtenerMaximo(vector);
         for (int exp = 1; max / exp > 0; exp *= 10) {
-            countSort(vector, exp);
+            vector = countSort(vector, exp);
         }
         return vector;
     }
